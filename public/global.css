@@ -40,6 +40,9 @@
 	--evaluated-key-color: var(--fg-primary);
 	--key-bg: var(--fg-secondary);
     --tile-font: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+    
+    --header-height: 51px;
+    --keyboard-height: 180px;
 }
 html {
     height: 100%;

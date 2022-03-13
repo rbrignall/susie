@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getRowData, words, ROWS, COLS } from "../../utils";
+	import { words, COLS } from "../../utils";
     import { wordNumber } from "../../stores"
     
 	import CVCRow from "./CVCRow.svelte";
@@ -9,7 +9,7 @@
 	export let value: string[];
 //	export let board: GameBoard;
 //  export let boardState: string[];
-    export let evaluations: LetterState[][];
+    export let evaluations: LetterState[];
 	export let guesses: number;
 	export function shake(row: number) {
 		rows[row].shake();
@@ -28,26 +28,15 @@
 	let y = 0;
 	let word = "";
     let innerHeight;
+    let innerWidth;
 
-	function context(cx: number, cy: number, num: number, val: string) {
-		if (guesses >= num) {
-			x = cx;
-			y = cy;
-			showCtx = true;
-			word = guesses > num ? val : "";
-
-			const match = getRowData(num, boardState, evaluations);
-			pAns = words.words.filter((w) => match(w)).length;
-			pSols = pAns + words.valid.filter((w) => match(w)).length;
-		}
-	}
 </script>
-<svelte:window bind:innerHeight={innerHeight} />
+<svelte:window bind:innerHeight={innerHeight} bind:innerWidth={innerWidth}/>
 
-<div class="board" id="boardid" style="width: {COLS * Math.floor(Math.min(Math.floor(innerHeight*(4/7)),420)/ROWS)}px; height: {Math.min(Math.floor(innerHeight*(4/7)),420)}px;">
-        <CVCRow
+<div class="board" id="boardid" style="width: {innerWidth}px; height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height)); --repeat: {guesses+2}">
+    <CVCRow
             word={words.words[$wordNumber]}
-        />
+    />
 	{#each value as _, i}
 		<Row
 			num={i}
@@ -55,18 +44,21 @@
 			bind:this={rows[i]}
 			bind:value={value[i]}
 			evaluation={evaluations[i]}
-			on:ctx={(e) => context(e.detail.x, e.detail.y, i, value[i])}
 		/>
 	{/each}
 </div>
 
 <style>
 	.board {
+        max-width: 480px;
+        max-height: 420px;
 		display: grid;
-		grid-template-rows: repeat(var(--rows), 1fr);
+        /*grid-template-rows: 80px;*/
+        /*justify-items: start;*/
+		grid-template-rows: repeat(var(--repeat), 1fr);
 		grid-gap: 0px;
-		flex-grow: 1;
-		padding: 5px;
+		/*flex-grow: 1;*/
+		padding: 0px;
 		position: relative;
 	}
 </style>

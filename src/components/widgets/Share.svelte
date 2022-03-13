@@ -2,7 +2,7 @@
 	import type Toaster from "./Toaster.svelte";
 
 	import { mode } from "../../stores";
-	import { modeData, ROWS } from "../../utils";
+	import { modeData } from "../../utils";
 	import { getContext } from "svelte";
     import { WhatsApp, Twitter } from "./sharebuttons";
 

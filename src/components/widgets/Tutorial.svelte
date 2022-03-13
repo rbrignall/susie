@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { COLS, ROWS } from "../../utils";
+	import { COLS } from "../../utils";
 
 	import { Tile } from "../board";
 	export let visible: boolean;
@@ -9,7 +9,7 @@
 
 <h3>how to play</h3>
 
-<div>Guess the <strong>n-erdle</strong> in {ROWS} tries.</div>
+<div>Guess the <strong>susie</strong>.</div>
 <div>Each guess must be a valid {COLS}-letter word. Press enter to submit a guess. The colour of the tiles will then change as follows.
 </div>
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">

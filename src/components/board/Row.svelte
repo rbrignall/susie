@@ -6,10 +6,12 @@
 	export let guesses: number;
 	export let num: number;
 	export let value = "";
-	export let evaluation: number;
+	export let evaluation: LetterState;
     
     let evalclasses = ["zero","one","two","three","four","five"];
-    let evalclass = (evaluation < 0) ? "nil" : evalclasses[evaluation];
+    function getTileClass(ev) {
+        return (ev < 0) ? "nil" : evalclasses[ev];
+    }
     
 	export function shake() {
 		animation = "shake";
@@ -29,14 +31,17 @@
 	class:complete={guesses > num}
 >
 	{#each Array(COLS) as _, i}
-		<Tile bind:this={tiles[i]} state={evalclass} value={value.charAt(i)} position={i+num} />
-	{/each}
+		<Tile bind:this={tiles[i]} state={getTileClass(evaluation)} value={value.charAt(i)} position={i+num} />
+    {/each}
+    {#if evaluation >= 0}
+        <Tile state={getTileClass(evaluation)} value={evaluation} />
+    {/if}
 </div>
 
 <style lang="scss">
 	.board-row {
 		display: grid;
-		grid-template-columns: repeat(var(--cols), 1fr);
+		grid-template-columns: repeat(calc(var(--cols) + 1), 1fr);
 		grid-gap: 0px;
 		font-size: 2.4rem;
         line-height: 2.4rem;

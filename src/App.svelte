@@ -4,7 +4,6 @@
 		createDefaultStats,
 		createNewGame,
 		createLetterStates,
-		ROWS,
 		getWordNumber,
 		words,
 	} from "./utils";
@@ -59,9 +58,9 @@
 		}
 		// Set the letter states when data for a new game mode is loaded so the keyboard is correct
 		const letters = createLetterStates();
-		for (let row = 0; row < ROWS; ++row) {
+		for (let row = 0; row < state.guesses; ++row) {
 			for (let col = 0; col < state.boardState[row].length; ++col) {
-				letters[state.boardState[row][col]] = state.evaluations[row][col];
+				letters[state.boardState[row][col]] = state.evaluations[row];
 			}
 		}
 		letterStates.set(letters);

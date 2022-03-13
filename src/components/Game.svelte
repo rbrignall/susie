@@ -22,7 +22,6 @@
 		getState,
 		modeData,
 		checkHardMode,
-		ROWS,
 		COLS,
 		newSeed,
 		createNewGame,
@@ -40,7 +39,7 @@
 	setContext("toaster", toaster);
 
 	// implement transition delay on keys
-	const delay = DELAY_INCREMENT * ROWS + 800;
+	const delay = DELAY_INCREMENT * game.guesses + 800;
 
 	let showTutorial = false; 
 	let showSettings = false;
@@ -75,11 +74,16 @@
 		} else if (words.contains(game.boardState[game.guesses])) {
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
-			//state.forEach((e, i) => (updateKey(e,i)));
+            
+            //state.forEach((e, i) => (updateKey(e,i)));
 			++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();
-			else if (game.guesses === ROWS) lose();
-		} else {
+            else {
+                // Add new row
+                game.evaluations.push(-1);
+                game.boardState.push("");
+            }
+        } else {
 			toaster.pop("Not in word list");
 			board.shake(game.guesses);
 		}
@@ -88,7 +92,7 @@
 	function win() {
 		board.bounce(game.guesses - 1);
         game.gameStatus = "WIN";
-		setTimeout(() => toaster.pop(sampleArray(PRAISE[game.guesses - 1])), DELAY_INCREMENT * ROWS);
+		setTimeout(() => toaster.pop(sampleArray(PRAISE[game.guesses - 1])), DELAY_INCREMENT * game.guesses);
 		setTimeout(() => (showStats = true), delay * 1.4);
 		if (!modeData.modes[$mode].historical) {
 			++stats.guesses[game.guesses];
@@ -105,19 +109,6 @@
 		}
 	}
 
-	function lose() {
-//		++game.guesses;
-        game.gameStatus = "FAIL";
-        setTimeout(() => toaster.pop(word.toUpperCase()), DELAY_INCREMENT * ROWS);
-		setTimeout(() => (showStats = true), delay);
-		if (!modeData.modes[$mode].historical) {
-			++stats.guesses.fail;
-			++stats.gamesPlayed;
-			if ("currentStreak" in stats) stats.currentStreak = 0;
-			stats.lastGame = modeData.modes[$mode].seed;
-			localStorage.setItem(`statistics`, JSON.stringify(stats));
-		}
-	}
 
 	function reload() {
 		modeData.modes[$mode].seed = newSeed();
@@ -131,16 +122,16 @@
 
 	onMount(() => {
 		if (!(game.gameStatus === "IN_PROGRESS")) setTimeout(() => (showStats = true), delay);
-        if (stats.gamesPlayed === 0) {
-            setTimeout(() => (showTutorial = true), delay);
-        }
+        //if (stats.gamesPlayed === 0) {
+        //    setTimeout(() => (showTutorial = true), delay);
+        //}
 	});
 	// $: toaster.pop(word);
 </script>
 
 <svelte:body on:click={board.hideCtx} on:contextmenu={board.hideCtx} />
 
-<main class:guesses={game.guesses !== 0} style="--rows: {ROWS}; --cols: {COLS}">
+<main class:guesses={game.guesses !== 0} style="--rows: {game.guesses}; --cols: {COLS}">
 	<Header
 		bind:showRefresh
 		showStats={stats.gamesPlayed > 0 || (modeData.modes[$mode].historical && !(game.gameStatus === "IN_PROGRESS"))}
@@ -149,7 +140,7 @@
 		on:settings={() => (showSettings = true)}
 		on:reload={reload}
 	/>
-    <div>
+    <div class="boardholder">
 	<Board
 		bind:this={board}
 		bind:value={game.boardState}
@@ -161,7 +152,7 @@
 		on:keystroke={() => {
 			board.hideCtx();
 		}}
-		bind:value={game.boardState[game.guesses === ROWS ? 0 : game.guesses]}
+		bind:value={game.boardState[game.guesses]}
 		on:submitWord={submitWord}
 		on:esc={() => {
 			showTutorial = false;
@@ -209,4 +200,8 @@
 		margin: 0px auto;
 		position: relative;
 	}
+    .boardholder {
+        overflow-y: auto;
+        max-height: 420px;
+    }
 </style>

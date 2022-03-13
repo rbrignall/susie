@@ -7,8 +7,6 @@ type WordData = {
 	/** A list of possible words to guess */
 	words: string[];
 	/** A list of words that are valid when input by the user but will never get chosen as the word to guess */
-	validFive: string[];
-	validSix: string[];
     valid: string [];
 };
 
@@ -17,7 +15,7 @@ type RowData = {
 	guess: number;
 };
 
-type LetterState = "nil" | "absent" | "present" | "correct" | -1 | 0 | 1 | 2 | 3 | 4 | 5;
+type LetterState = -1 | 0 | 1 | 2 | 3 | 4 | 5;
 
 type GameState = {
     gameStatus: "IN_PROGRESS" | "WIN" | "FAIL",
