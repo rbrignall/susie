@@ -23,7 +23,7 @@
     style="width: {width}px; height: {width/(COLS+1)}px;"
 >
 	{#each Array(COLS) as _, i}
-    		<Tile value={cvcpattern[i]} state="two" />
+    		<Tile value={cvcpattern[i]} state="nil" />
 	{/each}
 </div>
 
