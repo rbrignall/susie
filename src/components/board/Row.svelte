@@ -6,10 +6,11 @@
 	export let guesses: number;
 	export let num: number;
 	export let value = "";
-	export let evaluation: LetterState;
+	export let evaluation: WordState;
+    export let width: number;
     
     let evalclasses = ["zero","one","two","three","four","five"];
-    function getTileClass(ev) {
+    function getRowClass(ev) {
         return (ev < 0) ? "nil" : evalclasses[ev];
     }
     
@@ -19,22 +20,24 @@
 	export function bounce() {
 		tiles.forEach((e) => e.bounce());
 	}
-	const dispatch = createEventDispatcher();
+
+    const dispatch = createEventDispatcher();
 	let animation = "";
 	let tiles: Tile[] = [];
 </script>
 
 <div
-	class="board-row"
+	class="board-row {getRowClass(evaluation)}"
 	on:animationend={() => (animation = "")}
 	data-animation={animation}
 	class:complete={guesses > num}
+    style="width: {width}px; height: {width/(COLS+1)}px;"
 >
 	{#each Array(COLS) as _, i}
-		<Tile bind:this={tiles[i]} state={getTileClass(evaluation)} value={value.charAt(i)} position={i+num} />
+		<Tile bind:this={tiles[i]} value={value.charAt(i)} position={i+num} />
     {/each}
     {#if evaluation >= 0}
-        <Tile state={getTileClass(evaluation)} value={evaluation} />
+        <Tile value={evaluation} position={COLS+1+num} />
     {/if}
 </div>
 
@@ -48,6 +51,7 @@
 		&[data-animation="shake"] {
 			animation: shake 0.6s;
 		}
+        transition: background-color 1s ease;
 	}
     @media (max-height: 600px) {
         .board-row {
@@ -61,8 +65,25 @@
             line-height: 1.5em;
         }
     }
-    
-    
+
+   	.zero {
+		background: var(--color-zero);
+	}
+	.one {
+		background: var(--color-one);
+	}
+	.two {
+		background: var(--color-two);
+	}
+	.three {
+		background: var(--color-three);
+	}
+	.four {
+		background: var(--color-four);
+	}
+	.five {
+		background: var(--color-five);
+	} 
     
     
 	@keyframes shake {

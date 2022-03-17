@@ -4,6 +4,7 @@
 
 	import Tile from "./Tile.svelte";
     export let word: string;
+    export let width: number;
     
 	const dispatch = createEventDispatcher();
 	let animation = "";
@@ -19,9 +20,10 @@
 	class="board-row complete"
 	on:animationend={() => (animation = "")}
 	data-animation={animation}
+    style="width: {width}px; height: {width/(COLS+1)}px;"
 >
 	{#each Array(COLS) as _, i}
-    		<Tile value={cvcpattern[i]} state="absent" />
+    		<Tile value={cvcpattern[i]} state="two" />
 	{/each}
 </div>
 

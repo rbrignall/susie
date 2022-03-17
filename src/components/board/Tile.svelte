@@ -9,7 +9,7 @@
 	export let state: string;
 	export let position = 0;
 	export function bounce() {
-		setTimeout(() => (animation = "bounce"), (5 + position) * DELAY_INCREMENT);
+		setTimeout(() => (animation = "bounce"), (6 + position) * DELAY_INCREMENT);
 		//WAS: setTimeout(() => (animation = "bounce"), (ROWS + position) * DELAY_INCREMENT);
 	}
 	let s: string;
@@ -33,10 +33,9 @@
 	class:value
 	class:pop
 	class="tile {state} {s}"
-	style="transition-delay: {position * DELAY_INCREMENT}ms"
+	style="transition-delay: {position * DELAY_INCREMENT}ms;"
 >
-	<div class="front">{value}</div>
-	<div class="back">{value}</div>
+	{value}
 </div>
 
 <style lang="scss">
@@ -53,7 +52,7 @@
 	}
 	.tile {
         width: 100%;
-        max-height: 80px;
+        height: 100%;
         font-size: 100%;
         font-family: var(--tile-font);
 		font-weight: bold;
@@ -63,7 +62,16 @@
 		&[data-animation="bounce"] {
 			animation: bounce 1s;
 		}
-	}
+        display: inline-flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+		place-items: center;
+/*
+		position: absolute;
+		inset: 0;*/
+}
 	.back,
 	.front {
         width: 100%;
@@ -78,17 +86,18 @@
 		inset: 0;
 		backface-visibility: hidden;
 		-webkit-backface-visibility: hidden;
-		transition: transform 0s ease-in-out;
+//		transition: transform 0s ease-in-out;
+        transition: background-color 0.5s ease;
 	}
 	.front {
 		border: 2px solid var(--border-primary);
 /*		transform: rotateY(0deg);*/
-        transform: rotate3d(-1, 1, 0, 0deg);
+//        transform: rotate3d(-1, 1, 0, 0deg);
     }
 	.back {
 		background: var(--color-absent);
 /*		transform: rotateY(180deg);*/
-        transform: rotate3d(-1, 1, 0, 180deg);
+//        transform: rotate3d(-1, 1, 0, 180deg);
 	}
 	.zero .back {
 		background: var(--color-zero);
@@ -107,12 +116,6 @@
 	}
 	.five .back {
 		background: var(--color-five);
-	}
-	.correct .back {
-		background: var(--color-correct);
-	}
-	.present .back {
-		background: var(--color-present);
 	}
 	:global(.complete) .tile:not(.nil) .front {
 		transition-delay: inherit !important;

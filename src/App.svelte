@@ -3,12 +3,12 @@
 		modeData,
 		createDefaultStats,
 		createNewGame,
-		createLetterStates,
+		createKeyStates,
 		getWordNumber,
 		words,
 	} from "./utils";
 	import Game from "./components/Game.svelte";
-	import { letterStates, hardMode, mode, 
+	import { keyStates, hardMode, mode, 
             darkTheme, colorBlindTheme,
             wordNumber
     } from "./stores";
@@ -57,13 +57,13 @@
             state = temp;
 		}
 		// Set the letter states when data for a new game mode is loaded so the keyboard is correct
-		const letters = createLetterStates();
+		const letters = createKeyStates();
 		for (let row = 0; row < state.guesses; ++row) {
 			for (let col = 0; col < state.boardState[row].length; ++col) {
 				letters[state.boardState[row][col]] = state.evaluations[row];
 			}
 		}
-		letterStates.set(letters);
+		keyStates.set(letters);
 	});
 
 	$: saveState(state);

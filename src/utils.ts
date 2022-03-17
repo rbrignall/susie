@@ -13,29 +13,14 @@ export const words = {
 	},
 };
 
-export function checkHardMode(boardState: string[], evaluations: LetterState[][], row: number): HardModeData {
-	for (let i = 0; i < COLS; ++i) {
-		if (evaluations[row - 1][i] === "correct" && boardState[row - 1][i] !== boardState[row][i]) {
-			return { pos: i, char: boardState[row - 1][i], type: "correct" };
-		}
-	}
-	for (let i = 0; i < COLS; ++i) {
-		if (evaluations[row - 1][i] === "present" && !boardState[row].includes(boardState[row - 1][i])) {
-			return { pos: i, char: boardState[row - 1][i], type: "present" };
-		}
-	}
-	return { pos: -1, char: "", type: "absent" };
-}
 
 export function getState(word: string, guess: string): number {
 	const charArr = word.split("");
-	const result = Array<LetterState>(COLS).fill("absent");
     let numRight = 0;
 
 	for (let i = 0; i < word.length; ++i) {
 		if (charArr.includes(guess.charAt(i))) {
             ++numRight;
-			result[i] = "present";
 			charArr[charArr.indexOf(guess.charAt(i))] = "$";
 		}
 	}
@@ -132,7 +117,7 @@ export function createNewGame(mode: GameMode): GameState {
 		wordNumber: getWordNumber(),
 		validHard: true,
         boardState: [""],//Array(ROWS).fill(""),
-        evaluations: ["-1"],//Array.from({ length: ROWS }, () => (-1)),
+        evaluations: [-1],//Array.from({ length: ROWS }, () => (-1)),
 	};
 }
 
@@ -158,7 +143,7 @@ export function createDefaultStats(mode: GameMode): Stats {
 	return stats;
 };
 
-export function createLetterStates(): { [key: string]: LetterState; } {
+export function createKeyStates(): { [key: string]: KeyState; } {
 	return {
 		a: "nil",
 		b: "nil",

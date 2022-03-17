@@ -9,7 +9,7 @@
 	export let value: string[];
 //	export let board: GameBoard;
 //  export let boardState: string[];
-    export let evaluations: LetterState[];
+    export let evaluations: WordState[];
 	export let guesses: number;
 	export function shake(row: number) {
 		rows[row].shake();
@@ -29,29 +29,36 @@
 	let word = "";
     let innerHeight;
     let innerWidth;
-
+//calc({innerHeight}px - var(--header-height) - var(--keyboard-height) - {Math.min(0.8 * innerWidth,480)/(COLS+1)}); 
 </script>
 <svelte:window bind:innerHeight={innerHeight} bind:innerWidth={innerWidth}/>
 
-<div class="board" id="boardid" style="width: {innerWidth}px; height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height)); --repeat: {guesses+2}">
+<div style="height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height));">
     <CVCRow
-            word={words.words[$wordNumber]}
+            word={words.words[$wordNumber]} width={Math.min(0.8 * innerWidth,480)}
     />
-	{#each value as _, i}
+    <div class="board" 
+        id="boardid" 
+        style="width: {Math.min(0.8 * innerWidth,480)}px; height: {(guesses+1)*Math.min(0.8 * innerWidth,480)/(COLS+1)}px; --repeat: {guesses+1}"
+    >
+    {#each value as _, i}
 		<Row
 			num={i}
 			{guesses}
 			bind:this={rows[i]}
 			bind:value={value[i]}
 			evaluation={evaluations[i]}
+            width={Math.min(0.8 * innerWidth,480)}
 		/>
 	{/each}
+    </div>
 </div>
 
 <style>
 	.board {
         max-width: 480px;
         max-height: 420px;
+        overflow-y: auto;
 		display: grid;
         /*grid-template-rows: 80px;*/
         /*justify-items: start;*/

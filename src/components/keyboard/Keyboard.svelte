@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, onDestroy, onMount } from "svelte/internal";
-	import { letterStates, mode } from "../../stores";
+	import { keyStates, mode } from "../../stores";
 	import { COLS, keys } from "../../utils";
 	import Key from "./Key.svelte";
 
@@ -49,7 +49,7 @@
 			<Key
 				{letter}
 				on:keystroke={(e) => appendValue(e.detail)}
-				state={$letterStates[letter]}
+				state={$keyStates[letter]}
 			/>
 		{/each}
 	</div>
@@ -58,7 +58,7 @@
 			<Key
 				{letter}
 				on:keystroke={(e) => appendValue(e.detail)}
-				state={$letterStates[letter]}
+				state={$keyStates[letter]}
 			/>
 		{/each}
 	</div>
@@ -74,7 +74,7 @@
 			<Key
 				{letter}
 				on:keystroke={(e) => appendValue(e.detail)}
-				state={$letterStates[letter]}
+				state={$keyStates[letter]}
 			/>
 		{/each}
 		<Key letter="" on:keystroke={backspaceValue}>

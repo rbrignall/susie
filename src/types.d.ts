@@ -15,7 +15,9 @@ type RowData = {
 	guess: number;
 };
 
-type LetterState = -1 | 0 | 1 | 2 | 3 | 4 | 5;
+type WordState = -1 | 0 | 1 | 2 | 3 | 4 | 5;
+
+type KeyState = "nil" | "absent";
 
 type GameState = {
     gameStatus: "IN_PROGRESS" | "WIN" | "FAIL",
@@ -24,7 +26,7 @@ type GameState = {
 	wordNumber: number,
 	validHard: boolean,
     boardState: string[],
-    evaluations: LetterState[],
+    evaluations: WordState[],
 };
 
 

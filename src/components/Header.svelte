@@ -58,7 +58,6 @@
 
 <style lang="scss">
 	header {
-		--header-height: 51px;
 		position: relative;
 		font-weight: 700;
 		text-transform: uppercase;

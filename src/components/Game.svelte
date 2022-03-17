@@ -21,15 +21,14 @@
 		PRAISE,
 		getState,
 		modeData,
-		checkHardMode,
 		COLS,
 		newSeed,
 		createNewGame,
         getWordNumber,
-		createLetterStates,
+		createKeyStates,
 		words,
 	} from "../utils";
-	import { letterStates, hardMode, mode } from "../stores";
+	import { keyStates, hardMode, mode } from "../stores";
 
 	export let word: string;
 	export let stats: Stats;
@@ -54,16 +53,16 @@
     }
     
     function updateKey(e,i) {
-        var temp = $letterStates[game.boardState[game.guesses][i]] 
+        var temp = $keyStates[game.boardState[game.guesses][i]] 
         switch(temp) {
             case "nil":
-                $letterStates[game.boardState[game.guesses][i]] = e;
+                $keyStates[game.boardState[game.guesses][i]] = e;
                 break;
             case "present":
-                $letterStates[game.boardState[game.guesses][i]] = (e === "correct" ? e : temp);
+                $keyStates[game.boardState[game.guesses][i]] = (e === "correct" ? e : temp);
                 break;
             default:
-                $letterStates[game.boardState[game.guesses][i]] = temp;
+                $keyStates[game.boardState[game.guesses][i]] = temp;
         }
     }
     
@@ -114,7 +113,7 @@
 		modeData.modes[$mode].seed = newSeed();
 		game = createNewGame($mode);
         word = words.words[getWordNumber() % words.words.length]
-        $letterStates = createLetterStates();
+        $keyStates = createKeyStates();
 		showStats = false;
 		showRefresh = false;
 		timer.reset($mode);
@@ -140,14 +139,12 @@
 		on:settings={() => (showSettings = true)}
 		on:reload={reload}
 	/>
-    <div class="boardholder">
 	<Board
 		bind:this={board}
 		bind:value={game.boardState}
 		evaluations={game.evaluations}
 		guesses={game.guesses}
 	/>
-    </div>
 	<Keyboard
 		on:keystroke={() => {
 			board.hideCtx();
@@ -200,8 +197,4 @@
 		margin: 0px auto;
 		position: relative;
 	}
-    .boardholder {
-        overflow-y: auto;
-        max-height: 420px;
-    }
 </style>
