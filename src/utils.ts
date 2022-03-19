@@ -1,5 +1,4 @@
 import seedrandom from "seedrandom";
-import { GameMode } from "./enums";
 import wordList from "./words_5";
 
 //export const ROWS = 6;
@@ -44,20 +43,6 @@ export function newSeed() {
 	const today = new Date();
     return new Date(today.getFullYear(), today.getMonth(), today.getDate()).valueOf();
 }
-
-export const modeData: ModeData = {
-	default: GameMode.daily,
-	modes: [
-		{
-			name: "Daily",
-			unit: 86400000,
-			start: 1642370400000,	// 17/01/2022
-			seed: newSeed(),
-			historical: false,
-			streak: true,
-		}
-	]
-};
 
 export function getWordNumber() {
     const numbleOneDate = new Date(2022,0,12,0,0,0,0).setHours(0,0,0,0)
@@ -109,20 +94,20 @@ export const PRAISE = [
     ]   
 ];
 
-export function createNewGame(mode: GameMode): GameState {
+export function createNewGame(): GameState {
 	return {
         gameStatus: "IN_PROGRESS",
 		guesses: 0,
-		time: modeData.modes[mode].seed,
 		wordNumber: getWordNumber(),
 		validHard: true,
         boardState: [""],//Array(ROWS).fill(""),
         evaluations: [-1],//Array.from({ length: ROWS }, () => (-1)),
+        keyStates: createKeyStates(),
 	};
 }
 
 
-export function createDefaultStats(mode: GameMode): Stats {
+export function createDefaultStats(): Stats {
 
     const urlStats = new URLSearchParams(window.location.search);
 	const stats = {
@@ -173,5 +158,3 @@ export function createKeyStates(): { [key: string]: KeyState; } {
 		z: "nil",
 	};
 }
-
-export const definitions = new Map<string, Promise<DictionaryEntry>>();

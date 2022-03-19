@@ -1,8 +1,5 @@
 import { writable } from "svelte/store";
-import type { GameMode } from "./enums";
 import { createKeyStates, getWordNumber } from "./utils";
-
-export const mode = writable<GameMode>();
 
 export const keyStates = writable(createKeyStates());
 

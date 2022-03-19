@@ -58,7 +58,7 @@
 	.board {
         max-width: 480px;
         max-height: 420px;
-        overflow-y: auto;
+        overflow-y: scroll;
 		display: grid;
         /*grid-template-rows: 80px;*/
         /*justify-items: start;*/

@@ -1,17 +1,15 @@
 <script lang="ts">
 	import type Toaster from "./Toaster.svelte";
 
-	import { mode } from "../../stores";
-	import { modeData } from "../../utils";
 	import { getContext } from "svelte";
     import { WhatsApp, Twitter } from "./sharebuttons";
 
 	export let state: GameState;
 	const toaster = getContext<Toaster>("toaster");
-    const url ="https://www.n-erdle.github.io";
+    const url ="https://susie.rbrignall.org.uk";
 
 	/* TODO: reinstate some kind of stats */
-    $: stats = `susie ${(state.wordNumber+1) % 3} ${
+    $: stats = `susie ${(state.wordNumber+1)} ${
 		(state.gameStatus === 'WIN') ? state.guesses : "X"
 	}/${state.boardState.length}\n\n${state.evaluations
     }\n`;

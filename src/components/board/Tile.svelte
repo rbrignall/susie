@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { onDestroy } from "svelte";
 
-	import { mode } from "../../stores";
+	import { wordNumber } from "../../stores";
 
 	import { DELAY_INCREMENT } from "../../utils";
 
 	export let value = "";
-	export let state: string;
 	export let position = 0;
 	export function bounce() {
 		setTimeout(() => (animation = "bounce"), (6 + position) * DELAY_INCREMENT);
@@ -17,7 +16,7 @@
 	let animation = "";
 
 	// ensure all animations play
-	const unsub = mode.subscribe(() => {
+	const unsub = wordNumber.subscribe(() => {
 		animation = "";
 		s = "nil";
 		setTimeout(() => (s = ""), 10);
@@ -32,7 +31,7 @@
 	data-animation={animation}
 	class:value
 	class:pop
-	class="tile {state} {s}"
+	class="tile {s}"
 	style="transition-delay: {position * DELAY_INCREMENT}ms;"
 >
 	{value}
@@ -68,67 +67,9 @@
         align-items: center;
         vertical-align: middle;
 		place-items: center;
-/*
-		position: absolute;
-		inset: 0;*/
 }
-	.back,
-	.front {
-        width: 100%;
-        height: 100%;
-		display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        vertical-align: middle;
-		place-items: center;
-		position: absolute;
-		inset: 0;
-		backface-visibility: hidden;
-		-webkit-backface-visibility: hidden;
-//		transition: transform 0s ease-in-out;
-        transition: background-color 0.5s ease;
-	}
-	.front {
-		border: 2px solid var(--border-primary);
-/*		transform: rotateY(0deg);*/
-//        transform: rotate3d(-1, 1, 0, 0deg);
-    }
-	.back {
-		background: var(--color-absent);
-/*		transform: rotateY(180deg);*/
-//        transform: rotate3d(-1, 1, 0, 180deg);
-	}
-	.zero .back {
-		background: var(--color-zero);
-	}
-	.one .back {
-		background: var(--color-one);
-	}
-	.two .back {
-		background: var(--color-two);
-	}
-	.three .back {
-		background: var(--color-three);
-	}
-	.four .back {
-		background: var(--color-four);
-	}
-	.five .back {
-		background: var(--color-five);
-	}
-	:global(.complete) .tile:not(.nil) .front {
-		transition-delay: inherit !important;
-		transition-duration: 0.8s;
-/*		transform: rotateY(180deg);*/
-        transform: rotate3d(-1, 1, 0, 180deg);
-	}
-	:global(.complete) .tile:not(.nil) .back {
-		transition-delay: inherit !important;
-		transition-duration: 0.8s;
-/*		transform: rotateY(0deg);*/
-        transform: rotate3d(-1, 1, 0, 0deg);
-	}
+
+
 	@keyframes pop {
 		from {
 			scale: 0.8;

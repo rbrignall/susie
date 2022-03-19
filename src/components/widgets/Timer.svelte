@@ -3,8 +3,8 @@
 
 	import { blur } from "svelte/transition";
 	import type { GameMode } from "../../enums";
-	import { mode } from "../../stores";
-	import { modeData } from "../../utils";
+	import { wordNumber } from "../../stores";
+	import { getWordNumber } from "../../utils";
 
 	const dispatch = createEventDispatcher();
 
@@ -15,22 +15,23 @@
 
 	let countDown: number;
 
-	export function reset(m: GameMode) {
+	export function reset() {
 		clearInterval(countDown);
-		ms = modeData.modes[m].unit - (new Date().valueOf() - modeData.modes[m].seed);
-		if (ms < 0) dispatch("timeup");
+            
+		ms = 86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0));
+		if (getWordNumber() > $wordNumber) dispatch("timeup");
 		countDown = setInterval(() => {
-			ms = modeData.modes[m].unit - (new Date().valueOf() - modeData.modes[m].seed);
+			ms = 86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0));
 			if (ms < 0) {
 				clearInterval(countDown);
 				dispatch("timeup");
 			}
 		}, SECOND);
 	}
-	$: reset($mode);
+	$: reset();
 </script>
 
-<h3>Next n-erdle</h3>
+<h3>Next Susie</h3>
 <div class="container">
 	{#if ms > 0}
 		<div transition:blur class="timer">

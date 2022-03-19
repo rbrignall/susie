@@ -1,6 +1,5 @@
 <script lang="ts">
 	import {
-		modeData,
 		createDefaultStats,
 		createNewGame,
 		createKeyStates,
@@ -8,11 +7,10 @@
 		words,
 	} from "./utils";
 	import Game from "./components/Game.svelte";
-	import { keyStates, hardMode, mode, 
+	import { keyStates, hardMode, 
             darkTheme, colorBlindTheme,
             wordNumber
     } from "./stores";
-	import { GameMode } from "./enums";
 	import { Toaster } from "./components/widgets";
 	import { onMount, setContext } from "svelte";
 
@@ -26,44 +24,35 @@
     darkTheme.set(JSON.parse(localStorage.getItem("darkTheme")) as boolean || false);
     colorBlindTheme.set(JSON.parse(localStorage.getItem("colorBlindTheme")) as boolean || false);
     hardMode.set(JSON.parse(localStorage.getItem("hardMode")) as boolean || false);
+    // N.B. wordNumber stores the index of the word!
     wordNumber.set(getWordNumber() % words.words.length);
     
     darkTheme.subscribe(s => localStorage.setItem("darkTheme",s));
     colorBlindTheme.subscribe(s => localStorage.setItem("colorBlindTheme",s));
     hardMode.subscribe(s => localStorage.setItem("hardMode",s));
-    //  TODO: wordNumber.subscribe should perhaps replace mode.subscribe
-    
-	const modeVal: GameMode = modeData.default;
-	mode.set(modeVal);
-    
 
-	mode.subscribe((m) => {
-		localStorage.setItem("mode", `${m}`);
-        
+	wordNumber.subscribe(() => {        
         // Grab statistics. CreateDefaultStats looks for URL data
-		stats = (JSON.parse(localStorage.getItem("statistics")) as Stats) || createDefaultStats(m);
+		stats = (JSON.parse(localStorage.getItem("statistics")) as Stats) || createDefaultStats();
 
-        word = words.words[getWordNumber() % words.words.length];
+        word = words.words[$wordNumber];
 		let temp: GameState;
         temp = JSON.parse(localStorage.getItem("gameState"));
-        if (!temp || temp.wordNumber < $wordNumber) {
-            state = createNewGame(m);
+        if (!temp || temp.wordNumber < getWordNumber()) {
+            state = createNewGame();
         } else {
-            // This is for backwards compatibility, can be removed in a day
-            if (!temp.wordNumber) {
-				temp.wordNumber = getWordNumber();
-            }
             // TODO: Add checks for missing items in temp (e.g. evaluation being null)
             state = temp;
 		}
 		// Set the letter states when data for a new game mode is loaded so the keyboard is correct
-		const letters = createKeyStates();
-		for (let row = 0; row < state.guesses; ++row) {
-			for (let col = 0; col < state.boardState[row].length; ++col) {
-				letters[state.boardState[row][col]] = state.evaluations[row];
-			}
-		}
-		keyStates.set(letters);
+//		const letters = state.keyStates;
+//		for (let row = 0; row < state.guesses; ++row) {
+//			for (let col = 0; col < state.boardState[row].length; ++col) {
+//				letters[state.boardState[row][col]] = state.evaluations[row];
+//			}
+//		}
+		keyStates.set(state.keyStates);
+        keyStates.subscribe(s => state.keyStates = s);
 	});
 
 	$: saveState(state);

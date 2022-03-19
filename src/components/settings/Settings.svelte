@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { mode, darkTheme, colorBlindTheme, hardMode } from "../../stores";
-	import { modeData } from "../../utils";
+	import { darkTheme, colorBlindTheme, hardMode } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
@@ -82,7 +81,7 @@
     <div class="footer">
         <div>Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
         <div class="word">
-            Game #{(wordNumber+1) % 3}
+            Game #{wordNumber+1}
         </div>
     </div>
 </div>

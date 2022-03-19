@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, getContext } from "svelte";
 	import { scale, fade } from "svelte/transition";
-	import { mode } from "../stores";
-	import { modeData } from "../utils";
+	import { wordNumber } from "../stores";
 	import GameIcon from "./GameIcon.svelte";
 	import type { Toaster } from "./widgets";
 
@@ -13,8 +12,9 @@
 //	export let toaster = getContext<Toaster>("toaster");
 
 	const dispatch = createEventDispatcher();
-	mode.subscribe((m) => {
-		if (modeData.modes[m].unit - (new Date().valueOf() - modeData.modes[m].seed) > 0) {
+
+    wordNumber.subscribe((m) => {
+		if (86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0)) > 0) {
 			showRefresh = false;
 		}
 	});

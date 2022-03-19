@@ -20,7 +20,6 @@
 		DELAY_INCREMENT,
 		PRAISE,
 		getState,
-		modeData,
 		COLS,
 		newSeed,
 		createNewGame,
@@ -28,7 +27,7 @@
 		createKeyStates,
 		words,
 	} from "../utils";
-	import { keyStates, hardMode, mode } from "../stores";
+	import { keyStates, wordNumber } from "../stores";
 
 	export let word: string;
 	export let stats: Stats;
@@ -65,6 +64,18 @@
                 $keyStates[game.boardState[game.guesses][i]] = temp;
         }
     }
+    function updateKeyboard() {
+        let guessWord = game.boardState[game.guesses].split("");
+        let guessEval = game.evaluations[game.guesses];
+        switch(guessEval) {
+            case 0:
+                guessWord.forEach((e, i) => ($keyStates[e] = "absent"));
+                break;
+            case 1:
+                // TODO!
+        }
+    }
+    
     
 	function submitWord() {
 		if (game.boardState[game.guesses].length !== COLS) {
@@ -73,9 +84,9 @@
 		} else if (words.contains(game.boardState[game.guesses])) {
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
-            
-            //state.forEach((e, i) => (updateKey(e,i)));
-			++game.guesses;
+            updateKeyboard();
+
+            ++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();
             else {
                 // Add new row
@@ -93,30 +104,28 @@
         game.gameStatus = "WIN";
 		setTimeout(() => toaster.pop(sampleArray(PRAISE[game.guesses - 1])), DELAY_INCREMENT * game.guesses);
 		setTimeout(() => (showStats = true), delay * 1.4);
-		if (!modeData.modes[$mode].historical) {
-			++stats.guesses[game.guesses];
-			++stats.gamesPlayed;
-			if ("currentStreak" in stats) {
-				stats.currentStreak =
-					modeData.modes[$mode].seed - stats.lastGame > modeData.modes[$mode].unit
-						? 1
-						: stats.currentStreak + 1;
+        ++stats.guesses[game.guesses];
+        ++stats.gamesPlayed;
+        if ("currentStreak" in stats) {
+            stats.currentStreak =
+				    game.wordNumber - stats.lastGame > 1
+				        ? 1
+				        : stats.currentStreak + 1;
 				if (stats.currentStreak > stats.maxStreak) stats.maxStreak = stats.currentStreak;
-			}
-			stats.lastGame = modeData.modes[$mode].seed;
-			localStorage.setItem(`statistics`, JSON.stringify(stats));
-		}
+        }
+        stats.lastGame = game.wordNumber;
+        localStorage.setItem(`statistics`, JSON.stringify(stats));
 	}
 
 
 	function reload() {
-		modeData.modes[$mode].seed = newSeed();
-		game = createNewGame($mode);
-        word = words.words[getWordNumber() % words.words.length]
+        $wordNumber = getWordNumber() % words.words.length
+		game = createNewGame();
+        word = words.words[$wordNumber]
         $keyStates = createKeyStates();
 		showStats = false;
 		showRefresh = false;
-		timer.reset($mode);
+		//timer.reset($mode);
 	}
 
 	onMount(() => {
@@ -133,7 +142,7 @@
 <main class:guesses={game.guesses !== 0} style="--rows: {game.guesses}; --cols: {COLS}">
 	<Header
 		bind:showRefresh
-		showStats={stats.gamesPlayed > 0 || (modeData.modes[$mode].historical && !(game.gameStatus === "IN_PROGRESS"))}
+		showStats={stats.gamesPlayed > 0}
 		on:stats={() => (showStats = true)}
 		on:tutorial={() => (showTutorial = true)}
 		on:settings={() => (showSettings = true)}

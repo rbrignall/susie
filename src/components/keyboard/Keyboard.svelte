@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, onDestroy, onMount } from "svelte/internal";
-	import { keyStates, mode } from "../../stores";
+	import { keyStates, wordNumber } from "../../stores";
 	import { COLS, keys } from "../../utils";
 	import Key from "./Key.svelte";
 
@@ -34,7 +34,7 @@
 	}
 
 	// Ensure keys change on load instead of loading their state color & change the color of all the keys to neutral, then to their correct color on mode change
-	const unsub = mode.subscribe(() => {
+	const unsub = wordNumber.subscribe(() => {
 		preventChange = true;
 		setTimeout(() => (preventChange = false), 200);
 	});

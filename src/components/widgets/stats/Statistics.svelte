@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { mode } from "../../../stores";
-	import { modeData } from "../../../utils";
 
 	import Stat from "./Stat.svelte";
 	export let data: Stats;

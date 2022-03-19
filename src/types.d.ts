@@ -22,11 +22,11 @@ type KeyState = "nil" | "absent";
 type GameState = {
     gameStatus: "IN_PROGRESS" | "WIN" | "FAIL",
 	guesses: number,
-	time: number,
 	wordNumber: number,
 	validHard: boolean,
     boardState: string[],
     evaluations: WordState[],
+    keyStates: KeyState[],
 };
 
 
@@ -34,35 +34,6 @@ type GameState = {
 
 type SettingType = "switch";
 
-type Word = {
-	daily: string,
-	getState: (char: string, index: number, mode: GameMode) => number,
-};
-
-type DictionaryEntry = {
-	word: string;
-	phonetic: string;
-	phonetics: Phonetic[];
-	origin: string;
-	meanings: Meaning[];
-};
-
-type Meaning = {
-	partOfSpeech: string;
-	definitions: Definition[];
-};
-
-type Definition = {
-	definition: string;
-	synonyms: string[];
-	antonyms: any[];
-	example?: string;
-};
-
-type Phonetic = {
-	text: string;
-	audio: string;
-};
 
 type Stats = {
 	gamesPlayed: number;
@@ -82,20 +53,6 @@ type Guesses = {
 	"fail": number;
 };
 
-type ModeData = {
-	default: GameMode,
-	modes: Mode[],
-};
-
-type Mode = {
-	name: string,
-	unit: number,
-	start: number,
-	seed: number,
-	historical: boolean,
-	icon?: string,
-	streak?: boolean,
-};
 
 type HardModeData = {
 	pos: number,

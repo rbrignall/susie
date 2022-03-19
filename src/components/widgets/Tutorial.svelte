@@ -12,6 +12,7 @@
 <div>Guess the <strong>susie</strong>.</div>
 <div>Each guess must be a valid {COLS}-letter word. Press enter to submit a guess. The colour of the tiles will then change as follows.
 </div>
+<!--
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
 	<div><strong>Examples</strong></div>
 	<div class="row">
@@ -39,7 +40,8 @@
 	</div>
 	<div>The letter <strong>U</strong> is not in the word in any spot.</div>
 </div>
-<div>A new n-erdle will be available at midnight each day!</div>
+-->
+<div>A new Susie will be available at midnight each day!</div>
 
 
 <style lang="scss">
