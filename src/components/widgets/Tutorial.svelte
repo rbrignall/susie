@@ -4,44 +4,78 @@
 	import { Tile } from "../board";
 	export let visible: boolean;
     
-    let rowWidth = 44*COLS-4;
+    let rowWidth = 50*(COLS+1);
 </script>
 
 <h3>how to play</h3>
 
-<div>Guess the <strong>susie</strong>.</div>
-<div>Each guess must be a valid {COLS}-letter word. Press enter to submit a guess. The colour of the tiles will then change as follows.
-</div>
-<!--
+<div>Can you find Susie's word?</div>
+
+<div>She has given hints about each letter: C stands for consonant and V stands for vowel.</div>
+
+<div>Each guess must be a valid five-letter word. Hit the enter button to submit.</div>
+
+<div>After each guess, the colour of the tiles will change to show you how close your guess was to the word.</div>
+
+<div>The number after the word shows how many correct letters are in the word.</div>
+
+<div>As you get closer (warmer), the colours change from blue (cold) to red (hot).</div>
+
+
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
-	<div><strong>Examples</strong></div>
-	<div class="row">
-		<Tile value="w" state="correct" />
-		<Tile value="e" state="nil" />
-		<Tile value="a" state="nil" />
-		<Tile value="r" state="nil" />
-		<Tile value="y" state="nil" />
-	</div>
-	<div>The letter <strong>W</strong> is in the word and in the correct spot.</div>
-	<div class="row">
-		<Tile value="p" state="nil" />
-		<Tile value="i" state="present" />
-		<Tile value="l" state="nil" />
-		<Tile value="l" state="nil" />
-		<Tile value="s" state="nil" />
-	</div>
-	<div>The letter <strong>I</strong> is in the word but in the wrong spot.</div>
-	<div class="row">
-		<Tile value="v" state="nil" />
-		<Tile value="a" state="nil" />
-		<Tile value="g" state="nil" />
-		<Tile value="u" state="absent" />
-		<Tile value="e" state="nil" />
-	</div>
-	<div>The letter <strong>U</strong> is not in the word in any spot.</div>
+	<div><strong>Example</strong></div>
+	<div class="row nil">
+		<Tile value="c" />
+		<Tile value="c" />
+		<Tile value="v" />
+		<Tile value="c" />
+		<Tile value="c" />
+		<Tile value="" />
 </div>
--->
-<div>A new Susie will be available at midnight each day!</div>
+	<div class="row one">
+		<Tile value="s" />
+		<Tile value="p" />
+		<Tile value="e" />
+		<Tile value="l" />
+		<Tile value="l" />
+		<Tile value="1" />
+	</div>
+    	<div class="row two">
+		<Tile value="s" />
+		<Tile value="p" />
+		<Tile value="i" />
+		<Tile value="l" />
+		<Tile value="l" />
+		<Tile value="2" />
+	</div>
+    	<div class="row three">
+		<Tile value="s" />
+		<Tile value="t" />
+		<Tile value="i" />
+		<Tile value="l" />
+		<Tile value="l" />
+		<Tile value="3" />
+	</div>
+    	<div class="row four">
+		<Tile value="s" />
+		<Tile value="t" />
+		<Tile value="i" />
+		<Tile value="c" />
+		<Tile value="k" />
+		<Tile value="4" />
+	</div>
+    	<div class="row five">
+		<Tile value="s" />
+		<Tile value="t" />
+		<Tile value="i" />
+		<Tile value="n" />
+		<Tile value="k" />
+		<Tile value="5" />
+	</div>
+
+</div>
+
+<div>A new word from SUSIE will be available each day!</div>
 
 
 <style lang="scss">
@@ -60,12 +94,13 @@
 	}
 	.row {
 		display: grid;
-		grid-template-columns: repeat(var(--cols), 1fr);
-		height: 40px;
+		grid-template-columns: repeat(calc(var(--cols) + 1), 1fr);
+		height: 50px;
         width: var(--tutorial-row-width);
-		grid-gap: 5px;
+		grid-gap: 0px;
         font-size: 1.8em;
-        line-height: 1.4em;
         vertical-align: middle;
+        margin: 0px;
+        padding: 0px;
 	}
 </style>

@@ -95,6 +95,7 @@
 		flex-direction: column;
 		align-items: center;
 		margin-bottom: 0px;
+        padding-top: 2px;
 	}
 	.row {
 		width: 100%;

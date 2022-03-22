@@ -19,6 +19,8 @@
 	}
 	export function hideCtx(e?: MouseEvent) {
 		if (!e || !e.defaultPrevented) showCtx = false;
+        if (scrollBoxObj) 
+            scrollBoxObj.scrollTop = scrollBoxObj.scrollHeight;
 	}
 	let rows: Row[] = [];
 	let showCtx = false;
@@ -29,17 +31,26 @@
 	let word = "";
     let innerHeight;
     let innerWidth;
-//calc({innerHeight}px - var(--header-height) - var(--keyboard-height) - {Math.min(0.8 * innerWidth,480)/(COLS+1)}); 
+    
+    let scrollBoxObj;
+    function getRowDim(w,h) {
+        return Math.min(0.8 * w,h,400);
+    }
+    function getBoxDim(w,h) {
+        return getRowDim(w,h) / (COLS+1);
+    }
+
 </script>
 <svelte:window bind:innerHeight={innerHeight} bind:innerWidth={innerWidth}/>
 
 <div style="height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height));">
     <CVCRow
-            word={words.words[$wordNumber]} width={Math.min(0.8 * innerWidth,480)}
+            word={words.words[$wordNumber]} width={getRowDim(innerWidth,innerHeight)}
     />
     <div class="board" 
         id="boardid" 
-        style="width: {Math.min(0.8 * innerWidth,480)}px; height: {(guesses+1)*Math.min(0.8 * innerWidth,480)/(COLS+1)}px; --repeat: {guesses+1}"
+        style="width: {getRowDim(innerWidth,innerHeight)}px; max-height: calc({innerHeight - getBoxDim(innerWidth,innerHeight)}px - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
+        bind:this={scrollBoxObj}
     >
     {#each value as _, i}
 		<Row
@@ -48,7 +59,7 @@
 			bind:this={rows[i]}
 			bind:value={value[i]}
 			evaluation={evaluations[i]}
-            width={Math.min(0.8 * innerWidth,480)}
+            width={getRowDim(innerWidth,innerHeight)}
 		/>
 	{/each}
     </div>
@@ -56,15 +67,10 @@
 
 <style>
 	.board {
-        max-width: 480px;
-        max-height: 420px;
         overflow-y: scroll;
 		display: grid;
-        /*grid-template-rows: 80px;*/
-        /*justify-items: start;*/
 		grid-template-rows: repeat(var(--repeat), 1fr);
 		grid-gap: 0px;
-		/*flex-grow: 1;*/
 		padding: 0px;
 		position: relative;
 	}

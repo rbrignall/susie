@@ -92,6 +92,7 @@
                 // Add new row
                 game.evaluations.push(-1);
                 game.boardState.push("");
+                //document.getElementById("boardid").scrollIntoView(false);
             }
         } else {
 			toaster.pop("Not in word list");

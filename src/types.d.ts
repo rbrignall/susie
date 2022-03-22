@@ -17,7 +17,7 @@ type RowData = {
 
 type WordState = -1 | 0 | 1 | 2 | 3 | 4 | 5;
 
-type KeyState = "nil" | "absent";
+type KeyState = "nil" | "absent" | "present";
 
 type GameState = {
     gameStatus: "IN_PROGRESS" | "WIN" | "FAIL",
@@ -26,7 +26,7 @@ type GameState = {
 	validHard: boolean,
     boardState: string[],
     evaluations: WordState[],
-    keyStates: KeyState[],
+    keyStates: { [key: string]: KeyState },
 };
 
 

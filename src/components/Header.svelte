@@ -65,7 +65,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-bottom: 1px solid var(--border-primary);
+		border-bottom: 2px solid var(--border-primary);
 		width: 100%;
 		height: var(--header-height);
 		position: relative;

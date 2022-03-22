@@ -83,6 +83,7 @@ h3 {
 	margin-bottom: 10px;
 }
 .absent,
+.zero,
 .one,
 .two,
 .three,
@@ -90,6 +91,24 @@ h3 {
 .five {
 	color: var(--evaluated-key-color);
 }
+.zero {
+	background: var(--color-zero);
+}
+.one {
+	background: var(--color-one);
+}
+.two {
+	background: var(--color-two);
+}
+.three {
+	background: var(--color-three);
+}
+.four {
+	background: var(--color-four);
+}
+.five {
+    background: var(--color-five);
+} 
 a:link,
 a:visited {
 	color: inherit;
@@ -103,3 +122,9 @@ a:visited {
     text-align: center;
     vertical-align: middle;
 }
+
+@media (max-height: 550px) {
+    :root {
+        --keyboard-height: 126px;
+    }
+} 

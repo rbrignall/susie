@@ -45,9 +45,6 @@
 	}
 	.value {
 		animation: pop 0.1s;
-		.front {
-			border-color: var(--border-primary);
-		}
 	}
 	.tile {
         width: 100%;
@@ -67,7 +64,7 @@
         align-items: center;
         vertical-align: middle;
 		place-items: center;
-}
+    }
 
 
 	@keyframes pop {
