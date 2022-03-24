@@ -66,24 +66,7 @@
         }
     }
 
-   	.zero {
-		background: var(--color-zero);
-	}
-	.one {
-		background: var(--color-one);
-	}
-	.two {
-		background: var(--color-two);
-	}
-	.three {
-		background: var(--color-three);
-	}
-	.four {
-		background: var(--color-four);
-	}
-	.five {
-		background: var(--color-five);
-	} 
+
     
     
 	@keyframes shake {
