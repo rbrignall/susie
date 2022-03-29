@@ -34,11 +34,14 @@
 			if (e.key === "Backspace") return backspaceValue();
 
 			if (e.key === "Enter") return dispatch("submitWord");
+
+            if (e.key === "Shift") return toggleKeyboard();
 		}
 		if (e.key === "Escape") dispatch("esc");
 	}
     function toggleKeyboard() {
-        $keyBoardToggle = ($keyBoardToggle + 1) % 3;
+        if (!disabled)
+            $keyBoardToggle = ($keyBoardToggle + 1) % 3;
     }
 
 	// Ensure keys change on load instead of loading their state color & change the color of all the keys to neutral, then to their correct color on mode change
