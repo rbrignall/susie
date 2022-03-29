@@ -56,42 +56,16 @@ export function getWordNumber() {
 export const DELAY_INCREMENT = 150;
 
 export const PRAISE = [
-    [
-        "Gloria in excelsis deo!",
-        "Hallelujah!",
-        "I was glaaaaaaad",
-        "Let all the world in ev'ry corner sing!"
-    ],
-    [
-        "Magnificat!",
-        "Jubilate!",
-        "My spirit sang all day",
-        "Jauchzet, frohlocket!"
-    ],
-    [
-        "And all the people rejoiced!",
-        "O Lord make haste to help us",
-        "A great and mighty wonder",
-        "O clap your hands"
-    ],
-    [
-        "Here endeth the lesson",
-        "One guess for each voice part, eh?",
-        "We'll treat that as the warm-up",
-        "Dies irae"
-    ],
-    [
-        "Were you nodding off during the sermon?",
-        "A Byrdle 5-part mess",
-        "Bit more breath control next time",
-        "Helps to watch the conductor",
-        "Tripped over your cassock"
-    ],[
-        "This took you almost as long as Psalm 119!",
-        "Tristis est anima mea",
-        "You're flat!",
-        "Requiem aeternam"
-    ]   
+        "Wow! First guess!",
+        "Amazing!",
+        "Brilliant!",
+        "Excellent!",
+        "Very good!",
+        "Great!",
+        "Good work",
+        "Nice job",
+        "Found it!",
+        "Phew!"
 ];
 
 export function createNewGame(): GameState {
