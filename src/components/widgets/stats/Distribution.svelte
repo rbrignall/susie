@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let guesses = 0;
-	export let distribution: Guesses;
+	export let distribution: number[];
 	export let active: boolean;
 
 	$: max = Math.max(...Object.values(distribution));
@@ -9,7 +9,7 @@
 <h3>guess distribution</h3>
 <div class="container">
 	{#each Object.entries(distribution) as guess, i (guess[0])}
-		{#if !isNaN(parseInt(guess[0]))}
+		{#if !isNaN(parseInt(guess[0])) && (guess[1] > 0)}
 			<div class="graph">
 				<span class="guess">{guess[0]}</span>
 				<div
@@ -17,7 +17,7 @@
 					class:this={parseInt(guess[0]) === guesses && !active}
 					style="width: {(guess[1] / max) * 100}%;"
 				>
-					{guess[1]}
+					{(guess[1] === null ? 0 : guess[1])}
 				</div>
 			</div>
 		{/if}
@@ -28,6 +28,7 @@
 	.guess {
 		display: grid;
 		place-items: center;
+        min-width: 8%;
 	}
 	.container {
 		width: 80%;
@@ -54,6 +55,6 @@
 		padding-right: 8px;
 	}
 	.bar.this {
-		background: var(--color-correct);
+		background: var(--color-five);
 	}
 </style>

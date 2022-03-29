@@ -105,7 +105,10 @@
         game.gameStatus = "WIN";
 		setTimeout(() => toaster.pop(sampleArray(PRAISE[game.guesses - 1])), DELAY_INCREMENT * game.guesses);
 		setTimeout(() => (showStats = true), delay * 1.4);
-        ++stats.guesses[game.guesses];
+        if (stats.guesses[game.guesses])
+            ++stats.guesses[game.guesses];
+        else
+            stats.guesses[game.guesses] = 1;
         ++stats.gamesPlayed;
         if ("currentStreak" in stats) {
             stats.currentStreak =

@@ -40,17 +40,7 @@ type Stats = {
 	currentStreak?: number;
 	maxStreak?: number;
 	lastGame: number;
-	guesses: Guesses;
-};
-
-type Guesses = {
-	"1": number;
-	"2": number;
-	"3": number;
-	"4": number;
-	"5": number;
-	"6": number;
-	"fail": number;
+	guesses: number[];
 };
 
 

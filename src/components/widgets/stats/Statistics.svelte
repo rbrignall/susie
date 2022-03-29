@@ -7,7 +7,6 @@
 	$: {
 		stats = [
 			["Played", data.gamesPlayed],
-			["Win %", Math.round(((data.gamesPlayed - data.guesses.fail) / data.gamesPlayed) * 100) || 0],
 			[
 				"Average Guesses",
 				(
@@ -20,9 +19,6 @@
 				).toFixed(1),
 			],
 		];
-		if (data.guesses.fail > 0) {
-			stats.push(["Lost", data.guesses.fail]);
-		}
 		if ("currentStreak" in data) {
 			stats.push(["Current Streak", data.currentStreak]);
 			stats.push(["Max Streak", data.maxStreak]);
