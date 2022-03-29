@@ -84,7 +84,7 @@
 		} else if (words.contains(game.boardState[game.guesses])) {
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
-            updateKeyboard();
+            //updateKeyboard();
 
             ++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();

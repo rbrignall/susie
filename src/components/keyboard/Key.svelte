@@ -8,7 +8,7 @@
 </script>
 
 <div class={state} class:big={letter.length !== 1} on:click={() => dispatch("keystroke", letter)}>
-	{letter}<slot />
+	{letter !== "*" ? letter : ""}<slot />
 </div>
 
 <style>
@@ -28,7 +28,7 @@
 		transition: background-color 0.3s ease-in-out;
 	}
 	:global(.guesses) div {
-		transition-delay: 1s;
+		transition-delay: 0s;
 	}
 	:global(.guesses .preventChange) div {
 		transition-duration: 0.15s;
@@ -43,9 +43,6 @@
 		background: var(--color-absent);
 	}
 	.present {
-		background: var(--color-present);
-	}
-	.correct {
-		background: var(--color-correct);
+		background: var(--color-five);
 	}
 </style>

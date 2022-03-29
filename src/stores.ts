@@ -8,3 +8,4 @@ export const colorBlindTheme = writable(false);
 export const hardMode = writable(false);
 
 export const wordNumber = writable(getWordNumber());
+export const keyBoardToggle = writable(0);
