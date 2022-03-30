@@ -15,6 +15,7 @@
 		if (!disabled) {
             if($keyBoardToggle > 0) {
                 $keyStates[char] = ($keyStates[char] === toggleState[$keyBoardToggle]) ? 'nil' : toggleState[$keyBoardToggle];
+                $keyBoardToggle = 0;
             } else if (value.length < COLS) {
                 dispatch("keystroke", char);
                 value += char;
