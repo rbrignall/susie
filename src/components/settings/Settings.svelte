@@ -35,6 +35,7 @@
 <div class="outer">
 	<div class="settings-top">
 		<h3>settings</h3>
+        <!--
 		<div
 			on:click={() => {
 				if (!validHard) {
@@ -47,13 +48,16 @@
 				<span slot="desc">Revealed hints must be used in subsequent guesses</span>
 			</Setting>
 		</div>
+        -->
 		<Setting type="switch" bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
 		</Setting>
+        <!--
 		<Setting type="switch" bind:value={$colorBlindTheme}>
 			<span slot="title">Colour Blind Mode</span>
 			<span slot="desc">High contrast colours</span>
 		</Setting>
+        -->
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
 			<div style="font-size: var(--fs-medium); font-weight: 500;">
@@ -79,7 +83,7 @@
     </div>
 	</div>
     <div class="footer">
-        <div>Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
+        <div>Concept by <a href="http://benponniah.com/" target="_blank">Ben Ponniah</a>. Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
         <div class="word">
             Game #{wordNumber+1}
         </div>
