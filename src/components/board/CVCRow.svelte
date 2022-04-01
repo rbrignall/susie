@@ -20,8 +20,9 @@
 	class="board-row complete"
 	on:animationend={() => (animation = "")}
 	data-animation={animation}
-    style="width: {width}px; height: {width/(COLS+1)}px;"
+    style="width: {width}px;"
 >
+        <Tile value="" />
 	{#each Array(COLS) as _, i}
     		<Tile value={cvcpattern[i]} />
 	{/each}
@@ -30,10 +31,11 @@
 <style lang="scss">
 	.board-row {
 		display: grid;
-		grid-template-columns: repeat(calc(var(--cols) + 1), 1fr);
+		grid-template-columns: repeat(calc(var(--cols) + 2), 1fr);
 		grid-gap: 0px;
-		font-size: 2.4rem;
-        line-height: 2.4rem;
+		font-size: 1.4rem;
+        line-height: 1.4rem;
+        height: 1.4em;
 		&[data-animation="shake"] {
 			animation: shake 0.6s;
 		}
@@ -43,14 +45,16 @@
 	}
     @media (max-height: 600px) {
         .board-row {
-            font-size: 2em;
-            line-height: 2em;
+            font-size: 1.2em;
+            line-height: 1.2em;
+            height: 1.2em;
         }
     }
     @media (max-height: 450px) {
         .board-row {
-            font-size: 1.5em;
-            line-height: 1.5em;
+            font-size: 1em;
+            line-height: 1em;
+            height: 1em;
         }
     }
 

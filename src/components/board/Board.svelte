@@ -34,10 +34,10 @@
     
     let scrollBoxObj;
     function getRowDim(w,h) {
-        return Math.min(0.8 * w,h,400);
+        return Math.min(0.9 * w,h,500);
     }
     function getBoxDim(w,h) {
-        return getRowDim(w,h) / (COLS+1);
+        return getRowDim(w,h) / (COLS+2);
     }
 
 </script>
@@ -49,7 +49,7 @@
     />
     <div class="board" 
         id="boardid" 
-        style="width: {getRowDim(innerWidth,innerHeight)}px; max-height: calc({innerHeight - getBoxDim(innerWidth,innerHeight)}px - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
+        style="width: {getRowDim(innerWidth,innerHeight)}px; max-height: calc({innerHeight}px - 2.2em - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
         bind:this={scrollBoxObj}
     >
     {#each value as _, i}

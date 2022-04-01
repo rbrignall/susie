@@ -9,7 +9,7 @@
 
 <h3>how to play</h3>
 
-<div>Can you find Susie's word?</div>
+<div>Can you find Susie's word in 10 guesses?</div>
 
 <div>She has given hints about each letter: C stands for consonant and V stands for vowel.</div>
 
@@ -24,58 +24,76 @@
 
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
 	<div><strong>Example</strong></div>
-	<div class="row nil">
+	<div class="row nil" style="height: 1em;">
 		<Tile value="c" />
 		<Tile value="c" />
 		<Tile value="v" />
 		<Tile value="c" />
 		<Tile value="c" />
-		<Tile value="" />
 </div>
+    <div class="wrapper">
 	<div class="row one">
 		<Tile value="s" />
 		<Tile value="p" />
 		<Tile value="e" />
 		<Tile value="l" />
 		<Tile value="l" />
+	</div>
+    <div class="numwrapper">
 		<Tile value="1" />
 	</div>
+	</div>
+    <div class="wrapper">
     	<div class="row two">
 		<Tile value="s" />
 		<Tile value="p" />
 		<Tile value="i" />
 		<Tile value="l" />
 		<Tile value="l" />
+	</div>
+    <div class="numwrapper">
 		<Tile value="2" />
 	</div>
-    	<div class="row three">
-		<Tile value="s" />
-		<Tile value="t" />
-		<Tile value="i" />
-		<Tile value="l" />
-		<Tile value="l" />
-		<Tile value="3" />
 	</div>
+    <div class="wrapper">
+       <div class="row three">
+          <Tile value="s" />
+		  <Tile value="t" />
+		  <Tile value="i" />
+		  <Tile value="l" />
+          <Tile value="l" />
+	   </div>
+    <div class="numwrapper">
+       <Tile value="3" />
+	</div>
+	</div>
+    <div class="wrapper">
     	<div class="row four">
 		<Tile value="s" />
 		<Tile value="t" />
 		<Tile value="i" />
 		<Tile value="c" />
 		<Tile value="k" />
-		<Tile value="4" />
 	</div>
+    <div class="numwrapper">
+        <Tile value="4" />
+	</div>
+	</div>
+    <div class="wrapper">
     	<div class="row five">
 		<Tile value="s" />
 		<Tile value="t" />
 		<Tile value="i" />
 		<Tile value="n" />
 		<Tile value="k" />
+	</div>
+    <div class="numwrapper">
 		<Tile value="5" />
 	</div>
-
+	</div>
 </div>
 
-<div>A new word from SUSIE will be available each day!</div>
+<div>A new word from Susie will be available each day!</div>
 
 
 <style lang="scss">
@@ -92,15 +110,29 @@
 			transition-delay: 0.3s;
 		}
 	}
-	.row {
+    .wrapper {
 		display: grid;
-		grid-template-columns: repeat(calc(var(--cols) + 1), 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		height: 50px;
-        width: var(--tutorial-row-width);
+        width: calc(var(--tutorial-row-width) * (var(--cols) + 1) / var(--cols));    
 		grid-gap: 0px;
         font-size: 1.8em;
         vertical-align: middle;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+		place-items: center;
         margin: 0px;
         padding: 0px;
+    }
+    .numwrapper {
+        vertical-align: middle;
+        height: 100%;
+    }
+    .row {
+		display: grid;
+		grid-template-columns: repeat(var(--cols), 1fr);
+		height: 100%;
+        width: var(--tutorial-row-width);
 	}
 </style>
