@@ -9,13 +9,10 @@
     const url ="https://susie.rbrignall.org.uk";
 
 	/* TODO: reinstate some kind of stats */
-    $: stats = `susie ${(state.wordNumber+1)} ${
+    $: stats = `Susie ${(state.wordNumber+1)} in ${
 		(state.gameStatus === 'WIN') ? state.guesses : "X"
-	}/${state.boardState.length}\n\n${state.evaluations
+	}:\n${state.evaluations.map((r) => r === 0 ? "⓿" : (r === 1 ? "❶" : (r === 2 ? "❷" : (r === 3 ? "❸" : (r === 4 ? "❹" : "❺"))))).join("")
     }\n`;
-	//	.slice(0, state.guesses)
-	//	.map((r) => r.map((l) => l === "absent" ? "⬜" : (l === "correct" ? "🟩" : "🟨")).join(""))
-	//	.join("\n")}\n`;
     
 </script>
 <h3>share</h3>
