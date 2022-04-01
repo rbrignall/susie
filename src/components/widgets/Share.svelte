@@ -11,7 +11,7 @@
 	/* TODO: reinstate some kind of stats */
     $: stats = `Susie ${(state.wordNumber+1)} in ${
 		(state.gameStatus === 'WIN') ? state.guesses : "X"
-	}:\n${state.evaluations.map((r) => r === 0 ? "⓿" : (r === 1 ? "❶" : (r === 2 ? "❷" : (r === 3 ? "❸" : (r === 4 ? "❹" : "❺"))))).join("")
+	}:\n${state.evaluations.map((r) => r === 0 ? "0️⃣" : (r === 1 ? "1️⃣" : (r === 2 ? "2️⃣" : (r === 3 ? "3️⃣" : (r === 4 ? "4️⃣" : "5️⃣"))))).join("")
     }\n`;
     
 </script>
