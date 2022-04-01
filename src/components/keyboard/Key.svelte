@@ -15,6 +15,7 @@
 	div {
 		font-size: calc(var(--fs-tiny) + 6px);
 		font-weight: bold;
+        font-family: var(--keyboard-font);
 		text-transform: uppercase;
 		border-radius: 6px;
 		/*height: 56px;*/

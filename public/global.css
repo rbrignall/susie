@@ -6,7 +6,7 @@
 }
 
 :root {
-	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+	font-family: Arial, sans-serif;
 	font-size: var(--fs-regular);
 	user-select: none;
 	-webkit-user-select: none;
@@ -39,9 +39,9 @@
 	--color-absent: var(--border-primary);
 	--evaluated-key-color: var(--fg-primary);
 	--key-bg: var(--fg-secondary);
-    --tile-font: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
-    
-    --header-height: 51px;
+    --tile-font: 'Josefin Sans', sans-serif,'Helvetica Neue', Arial, sans-serif;
+    --keyboard-font:'Josefin Sans', sans-serif;
+    --header-height: 61px;
     --keyboard-height: 180px;
 }
 html {
@@ -81,6 +81,8 @@ h3 {
 	text-align: center;
 	text-transform: uppercase;
 	margin-bottom: 10px;
+    font-weight: 700;
+    font-family: var(--tile-font);
 }
 .absent,
 .zero,

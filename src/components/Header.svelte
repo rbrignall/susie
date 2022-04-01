@@ -79,7 +79,9 @@
 		position: absolute;
 		width: 100%;
 		font-size: var(--fs-large);
+        font-family: var(--tile-font);
+        font-weight: 700;
+        letter-spacing: 0.5em;
 		text-align: center;
-        font-family: 'Helvetica Neue', Arial, sans-serif;
 	}
 </style>
