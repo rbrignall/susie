@@ -17,6 +17,7 @@
 	}
 	.stat {
 		font-size: var(--fs-large);
+        font-family: var(--tile-font);
 	}
     @media (max-width: 500px) {
         .stat {
