@@ -84,7 +84,8 @@
                     guessWord.split("").forEach((e, i) => (($keyStates[e] !== "present") && ($keyStates[e] = "absent")));
                 game.validHard = false;
                 break;
-                // TODO!
+                // TODO: count vowels / consonants
+                // TODO: Consider pairwise logical deductions
         }
     }
     
