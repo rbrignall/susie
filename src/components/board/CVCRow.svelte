@@ -33,32 +33,14 @@
 		display: grid;
 		grid-template-columns: repeat(calc(var(--cols) + 2), 1fr);
 		grid-gap: 0px;
-		font-size: 1.4rem;
-        line-height: 1.4rem;
-        height: 1.4em;
+		font-size: var(--fs-tile-small);
 		&[data-animation="shake"] {
 			animation: shake 0.6s;
 		}
         &:not(.complete) :global(.board-row .back) {
 			transition-delay: 0.3s;
 		}
-	}
-    @media (max-height: 600px) {
-        .board-row {
-            font-size: 1.2em;
-            line-height: 1.2em;
-            height: 1.2em;
-        }
-    }
-    @media (max-height: 450px) {
-        .board-row {
-            font-size: 1em;
-            line-height: 1em;
-            height: 1em;
-        }
-    }
-
-    
+	}    
     
 	@keyframes shake {
 		10%,

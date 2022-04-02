@@ -11,12 +11,19 @@
 	user-select: none;
 	-webkit-user-select: none;
 
+    --tile-font: 'Exo', sans-serif;
+    --keyboard-font:'Exo', sans-serif;
+
 	--fs-tiny: 12px;
 	--fs-small: 14px;
-	--fs-regular: 16px;
-	--fs-medium: 20px;
+	--fs-regular: 18px;
+	--fs-medium: 24px;
 	--fs-large: 36px;
 
+    --fs-tile-small: var(--fs-medium);
+    --fs-tile-large: var(--fs-large);
+
+    
 	--game-width: 500px;
 
 	--fg-primary: #d7dadc;
@@ -39,8 +46,6 @@
 	--color-absent: var(--border-primary);
 	--evaluated-key-color: var(--fg-primary);
 	--key-bg: var(--fg-secondary);
-    --tile-font: 'Josefin Sans', sans-serif,'Helvetica Neue', Arial, sans-serif;
-    --keyboard-font:'Josefin Sans', sans-serif;
     --header-height: 61px;
     --keyboard-height: 180px;
 }
@@ -127,6 +132,14 @@ a:visited {
 
 @media (max-height: 550px) {
     :root {
+        --fs-tile-small: var(--fs-regular);
+        --fs-tile-large: var(--fs-medium);
         --keyboard-height: 126px;
+    }
+} 
+@media (max-height: 400px) {
+    :root {
+        --fs-tile-small: var(--fs-small);
+        --fs-tile-large: var(--fs-regular);
     }
 } 

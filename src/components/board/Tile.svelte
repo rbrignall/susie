@@ -50,7 +50,6 @@
         width: 100%;
         height: 100%;
         font-size: 100%;
-        font-family: var(--tile-font);
 		font-weight: bold;
 		text-transform: uppercase;
 		position: relative;

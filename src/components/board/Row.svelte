@@ -35,49 +35,42 @@
 >
         <Tile value="" />
     <div class="inner-row {getRowClass(evaluation)}"
-        style="width: {width*COLS/(COLS+2)}px; height: {width/(COLS+2)}px;"
+        style="width: {width*COLS/(COLS+2)}px;"
     >
 	{#each Array(COLS) as _, i}
 		<Tile bind:this={tiles[i]} value={value.charAt(i)} position={i+1+num} />
     {/each}
     </div>
     {#if evaluation >= 0}
+    <div class="number-cell">
         <Tile value={evaluation} position={COLS+2+num} />
+    </div>
     {/if}
 </div>
 
 <style lang="scss">
 	.board-row {
+        padding: 0px;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-gap: 0px;
-		font-size: 2.4rem;
-        line-height: 2.4rem;
+        font-family: var(--tile-font);
 		&[data-animation="shake"] {
 			animation: shake 0.6s;
 		}
         transition: background-color 1s ease;
 	}
     .inner-row {
+        font-size: var(--fs-tile-large);
 		display: grid;
-		grid-template-columns: repeat(calc(var(--cols)), 1fr);
+        height: 100%;
+		grid-template-columns: repeat(var(--cols), 1fr);
 		grid-gap: 0px;
     }
-    @media (max-height: 600px) {
-        .board-row {
-            font-size: 2em;
-            line-height: 2em;
-        }
+    .number-cell {
+        font-size: var(--fs-tile-small);
+        height: 100%;    
     }
-    @media (max-height: 450px) {
-        .board-row {
-            font-size: 1.5em;
-            line-height: 1.5em;
-        }
-    }
-
-
-    
     
 	@keyframes shake {
 		10%,
