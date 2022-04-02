@@ -1,21 +1,21 @@
 {
-  "short_name": "n-erdle",
-  "name": "n-erdle",
+  "short_name": "Susie",
+  "name": "Susie",
   "icons": [
     {
-      "src": "/img/n-erdle_logo_32x32.png",
+      "src": "/img/susie_logo_32x32.png",
       "type": "image/png",
       "sizes": "32x32"
     },
     {
-      "src": "/img/n-erdle_logo_192x192.png",
+      "src": "/img/susie_logo_192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     }
   ],
-  "start_url": "https://n-erdle.github.io/",
+  "start_url": "https://susie.rbrignall.org.uk/",
   "background_color": "#6aaa64",
   "display": "standalone",
   "theme_color": "#6aaa64",
-  "description": "Guess the word in 6 tries"
+  "description": "Can you guess Susie's word"
 }
