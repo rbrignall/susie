@@ -37,8 +37,12 @@
 		{/if}
 	</div>
 	<h1>
-		Susie
-	</h1>
+        <span class="h1-one">S</span>
+        <span class="h1-two">u</span>
+        <span class="h1-three">s</span>
+        <span class="h1-four">i</span>
+        <span class="h1-five">e</span>
+    </h1>
 	<div class="icons">
 		{#if showStats}
 			<GameIcon onClick={() => dispatch("stats")}>
@@ -81,7 +85,25 @@
 		font-size: var(--fs-large);
         font-family: var(--tile-font);
         font-weight: 700;
-        letter-spacing: 0.5em;
 		text-align: center;
 	}
+    .h1-one {
+        color: var(--color-one);
+        padding-right: 0.4rem;
+    }
+    .h1-two {
+        color: var(--color-two);
+        padding-right: 0.4rem;
+    }
+    .h1-three {
+        color: var(--color-three);
+        padding-right: 0.4rem;
+    }
+    .h1-four {
+        color: var(--color-four);
+        padding-right: 0.4rem;
+    }
+    .h1-five {
+        color: var(--color-five);
+    }
 </style>

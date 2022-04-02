@@ -34,7 +34,7 @@
     
     let scrollBoxObj;
     function getRowDim(w,h) {
-        return Math.min(0.9 * w,h,500);
+        return Math.min(0.9 * w,h,400);
     }
     function getBoxDim(w,h) {
         return getRowDim(w,h) / (COLS+2);
