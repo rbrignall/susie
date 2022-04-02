@@ -76,6 +76,7 @@
             case 2:
             case 3:
             case 4:
+                // TODO: This doesn't cater well for repeated letters in guesses...
                 // Mark all remaining letters red when the right number are grey
                 if(countLetters(guessWord, "absent") === COLS - guessEval) 
                     guessWord.split("").forEach((e, i) => (($keyStates[e] !== "absent") && ($keyStates[e] = "present")));
@@ -97,7 +98,6 @@
 		} else if (words.contains(game.boardState[game.guesses])) {
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
-            // TODO: Code this:
             if(!$hardMode) updateKeyboard();
 
             ++game.guesses;
