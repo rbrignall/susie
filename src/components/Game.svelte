@@ -80,11 +80,13 @@
 		} else if (words.contains(game.boardState[game.guesses])) {
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
+            // TODO: Code this:
             //updateKeyboard();
 
             ++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();
             else {
+                if (state === 5) setTimeout(() => toaster.pop("Nearly there: try an anagram!"), DELAY_INCREMENT);
                 // Add new row
                 game.evaluations.push(-1);
                 game.boardState.push("");
