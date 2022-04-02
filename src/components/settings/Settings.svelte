@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { darkTheme, colorBlindTheme, hardMode } from "../../stores";
+	import { darkTheme, hardMode } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
@@ -21,17 +21,13 @@
 	$: {
 		if (root) {
 			$darkTheme ? root.classList.remove("light") : root.classList.add("light");
-			$colorBlindTheme
-				? root.classList.add("colorblind")
-				: root.classList.remove("colorblind");
             localStorage.setItem("darkTheme",$darkTheme)
-            localStorage.setItem("colorBlindTheme",$colorBlindTheme)
 		}
 	}
 </script>
 
 <!-- not currently supported, see https://github.com/sveltejs/svelte/issues/3105 -->
-<!-- <svelte:body class:light={!$darkTheme} class:colorblind={$colorBlindTheme} /> -->
+<!-- <svelte:body class:light={!$darkTheme} /> -->
 <div class="outer">
 	<div class="settings-top">
 		<h3>settings</h3>
@@ -52,12 +48,6 @@
 		<Setting type="switch" bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
 		</Setting>
-        <!--
-		<Setting type="switch" bind:value={$colorBlindTheme}>
-			<span slot="title">Colour Blind Mode</span>
-			<span slot="desc">High contrast colours</span>
-		</Setting>
-        -->
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
 			<div style="font-size: var(--fs-medium); font-weight: 500;">
