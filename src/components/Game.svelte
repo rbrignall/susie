@@ -27,7 +27,7 @@
 		createKeyStates,
 		words,
 	} from "../utils";
-	import { keyStates, wordNumber } from "../stores";
+	import { keyStates, wordNumber, hardMode } from "../stores";
 
 	export let word: string;
 	export let stats: Stats;
@@ -47,27 +47,43 @@
 	let board: Board;
 	let timer: Timer;
     
-    function updateKey(e,i) {
-        var temp = $keyStates[game.boardState[game.guesses][i]] 
-        switch(temp) {
-            case "nil":
-                $keyStates[game.boardState[game.guesses][i]] = e;
-                break;
-            case "present":
-                $keyStates[game.boardState[game.guesses][i]] = (e === "correct" ? e : temp);
-                break;
-            default:
-                $keyStates[game.boardState[game.guesses][i]] = temp;
-        }
+    
+    function countLetters(w: string, state: KeyState) {
+        let i = 0;
+        w.split("").forEach((e,j) => (($keyStates[e] === state) && i++));
+        return i;
     }
+    
+    
     function updateKeyboard() {
-        let guessWord = game.boardState[game.guesses].split("");
+        // Split and sort the letters alphabetically:
+        let allGuessedWords = game.boardState.map((w) => w.split("").sort().join(""));
+        let guessWord = allGuessedWords[game.guesses]; //game.boardState[game.guesses].split("").sort();
         let guessEval = game.evaluations[game.guesses];
         switch(guessEval) {
             case 0:
-                guessWord.forEach((e, i) => ($keyStates[e] = "absent"));
+                // Grey out all 5 letters
+                guessWord.split("").forEach((e, i) => ($keyStates[e] = "absent"));
+                game.validHard = false;
+                break;
+            case 5:
+                // Make all 5 letters red, and grey out all others
+                guessWord.split("").forEach((e, i) => ($keyStates[e] = "present"));
+                Object.entries($keyStates).forEach(entry => (!(entry[1] === "present") && ($keyStates[entry[0]] = "absent")));
+                game.validHard = false;
                 break;
             case 1:
+            case 2:
+            case 3:
+            case 4:
+                // Mark all remaining letters red when the right number are grey
+                if(countLetters(guessWord, "absent") === COLS - guessEval) 
+                    guessWord.split("").forEach((e, i) => (($keyStates[e] !== "absent") && ($keyStates[e] = "present")));
+                // Mark all remaining letters grey if red letters already known
+                if(countLetters(guessWord, "present") === guessEval)
+                    guessWord.split("").forEach((e, i) => (($keyStates[e] !== "present") && ($keyStates[e] = "absent")));
+                game.validHard = false;
+                break;
                 // TODO!
         }
     }
@@ -81,7 +97,7 @@
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
             // TODO: Code this:
-            //updateKeyboard();
+            if(!$hardMode) updateKeyboard();
 
             ++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();

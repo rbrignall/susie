@@ -31,7 +31,6 @@
 <div class="outer">
 	<div class="settings-top">
 		<h3>settings</h3>
-        <!--
 		<div
 			on:click={() => {
 				if (!validHard) {
@@ -41,10 +40,9 @@
 		>
 			<Setting type="switch" bind:value={$hardMode} disabled={!validHard}>
 				<span slot="title">Hard Mode</span>
-				<span slot="desc">Revealed hints must be used in subsequent guesses</span>
+				<span slot="desc">Turns off automatic keyboard highlighting.</span>
 			</Setting>
 		</div>
-        -->
 		<Setting type="switch" bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
 		</Setting>
