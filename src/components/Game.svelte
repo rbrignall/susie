@@ -48,46 +48,66 @@
 	let timer: Timer;
     
     
-    function countLetters(w: string, state: KeyState) {
-        let i = 0;
-        w.split("").forEach((e,j) => (($keyStates[e] === state) && i++));
-        return i;
+    function getUniqueLetters(str) {
+        return String.prototype.concat(...new Set(str))
     }
     
+    function countLetters(w: string, state: KeyState) {
+        return w.split("").filter(e => $keyStates[e] === state).length;
+    }
+    
+    function writeKeystate(w: string, checkState: KeyState, setState: KeyState) {
+        return w.split("").forEach(e => (($keyStates[e] !== checkState) && ($keyStates[e] = setState)));
+        game.validHard = false;
+    }
     
     function updateKeyboard() {
         // Split and sort the letters alphabetically:
         let allGuessedWords = game.boardState.map((w) => w.split("").sort().join(""));
-        let guessWord = allGuessedWords[game.guesses]; //game.boardState[game.guesses].split("").sort();
-        let guessEval = game.evaluations[game.guesses];
-        switch(guessEval) {
-            case 0:
-                // Grey out all 5 letters
-                guessWord.split("").forEach((e, i) => ($keyStates[e] = "absent"));
-                game.validHard = false;
-                break;
-            case 5:
-                // Make all 5 letters red, and grey out all others
-                guessWord.split("").forEach((e, i) => ($keyStates[e] = "present"));
-                Object.entries($keyStates).forEach(entry => (!(entry[1] === "present") && ($keyStates[entry[0]] = "absent")));
-                game.validHard = false;
-                break;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                // TODO: This doesn't cater well for repeated letters in guesses...
+        
+        allGuessedWords.slice().reverse().forEach((guessWord,i) => {
+            //let guessWord = allGuessedWords[game.guesses]; //game.boardState[game.guesses].split("").sort();
+            let guessEval = game.evaluations.slice().reverse()[i];
+
+            if(guessEval === 0) 
+                writeKeystate(guessWord,"ALL","absent");
+            else if(guessEval === 5) {
+                // Make all letters red, and grey out all others
+                writeKeystate(guessWord,"ALL","present");
+                writeKeystate(Object.entries($keyStates).join(""),"present","absent");
+            } else {
+                let uniqueLetters = getUniqueLetters(guessWord);
+
                 // Mark all remaining letters red when the right number are grey
-                if(countLetters(guessWord, "absent") === COLS - guessEval) 
-                    guessWord.split("").forEach((e, i) => (($keyStates[e] !== "absent") && ($keyStates[e] = "present")));
-                // Mark all remaining letters grey if red letters already known
-                if(countLetters(guessWord, "present") === guessEval)
-                    guessWord.split("").forEach((e, i) => (($keyStates[e] !== "present") && ($keyStates[e] = "absent")));
-                game.validHard = false;
-                break;
-                // TODO: count vowels / consonants
-                // TODO: Consider pairwise logical deductions
-        }
+console.log(guessWord, guessEval, countLetters(guessWord, "absent"), countLetters(guessWord, "present"));
+                if(countLetters(guessWord, "absent") === COLS - guessEval)
+                    writeKeystate(uniqueLetters,"absent","present");
+                // Mark all remaining letters grey if enough red letters already known
+                // N.B. checks only unique letters in guess
+                if(countLetters(uniqueLetters, "present") === guessEval)
+                    writeKeystate(uniqueLetters,"present","absent");
+            }
+        });
+        // Now update vowels and consonants:
+        let vowels = "aeiou";
+        let consonants = "bcdfghjklmnpqrstvwxyz";
+        let numVowels=word.split("").filter(e => vowels.includes(e)).length;
+
+        // Mark all remaining vowels grey if right number are red
+        if (numVowels === countLetters(vowels,"present"))
+            writeKeystate(vowels,"present","absent");
+        // If only one vowel is non-grey (and word contains >0 vowels), mark it red
+        if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels > 0) 
+            writeKeystate(vowels,"absent","present");
+        
+        // Now the same for consonants
+        if (COLS - numVowels === countLetters(consonants,"present"))
+            writeKeystate(consonants,"present","absent");
+        // If only one consonant is non-grey (and word contains >0 consonants), mark it red
+        if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS)
+            writeKeystate(vowels,"absent","present");
+
+        // TODO: Consider pairwise logical deductions
     }
     
     
