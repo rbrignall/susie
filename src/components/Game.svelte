@@ -79,7 +79,7 @@
                 let uniqueLetters = getUniqueLetters(guessWord);
 
                 // Mark all remaining letters red when the right number are grey
-console.log(guessWord, guessEval, countLetters(guessWord, "absent"), countLetters(guessWord, "present"));
+//console.log(guessWord, guessEval, countLetters(guessWord, "absent"), countLetters(guessWord, "present"));
                 if(countLetters(guessWord, "absent") === COLS - guessEval)
                     writeKeystate(uniqueLetters,"absent","present");
                 // Mark all remaining letters grey if enough red letters already known
