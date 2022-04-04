@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { COLS } from "../../utils";
-
+    import { easyMode } from "../../stores";
 	import { Tile } from "../board";
+    import WideSwitch from "../settings/WideSwitch.svelte";
+
 	export let visible: boolean;
+    export let firstvisit: boolean = true;
     
-    let rowWidth = 50*(COLS+1);
+    let rowWidth = 40*(COLS+1);
 </script>
 
 <h3>how to play</h3>
@@ -15,15 +18,35 @@
 
 <div>Each guess must be a valid five-letter word. Hit the enter button to submit.</div>
 
-<div>After each guess, the colour of the tiles will change to show you how close your guess was to the word.</div>
+<div>After each guess, the number after the word shows how many correct letters are in the word. The colour of the tiles also changes depending on how close your guess was.</div>
 
-<div>The number after the word shows how many correct letters are in the word.</div>
+<h3>Keyboard colours</h3>
 
-<div>As you get closer (warmer), the colours change from blue (cold) to red (hot).</div>
+<div>To help you close in on the word, keys on the keyboard can be highlighted grey (not in the word) or red (in the word).</div>
 
+<div>In "Normal" mode, you make your own logical deductions and can highlight keys for yourself. In "Easy" mode, the programme will make deductions and highlight keys for you.</div>
 
+{#if firstvisit}
+<div>Choose which mode you would like to play.</div>
+
+    <div class="switchholder">
+        <div class="switchoption right" class:selected={!$easyMode}>
+            Normal
+        </div>	
+        <div>
+            <WideSwitch bind:value={$easyMode} />
+        </div>	
+        <div class="switchoption left" class:selected={$easyMode}>
+            Easy
+        </div>
+    </div>
+    
+<div>You can change this in future from the settings menu.</div>
+{/if}
+
+<h3>Example</h3>
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
-	<div><strong>Example</strong></div>
+
 	<div class="row nil" style="height: 1em;">
 		<Tile value="c" />
 		<Tile value="c" />
@@ -100,9 +123,30 @@
 	div {
 		margin: 10px 0;
 	}
+    .switchholder {
+		display: grid;
+		grid-template-columns: 2fr 48px 2fr;    
+    }
+    .switchoption {
+        width: 100%;
+	    text-transform: uppercase;
+        font-weight: 700;
+        font-family: var(--tile-font);
+        font-size: var(--fs-regular);
+    }
+    .switchoption.left {
+        text-align: left;
+        padding-left: 10px;
+    }
+    .switchoption.right {
+        text-align: right;
+        padding-right: 10px;
+    }
+    .selected {
+        color: var(--color-correct);
+    }
+
 	.examples {
-		border-top: 1px solid var(--border-primary);
-		border-bottom: 1px solid var(--border-primary);
 		:global(.row > *) {
 			height: 100%;
 		}
