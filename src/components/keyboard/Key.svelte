@@ -3,14 +3,14 @@
 
 	export let letter: string;
 	export let state: WordState = "nil";
-
+    export let visible = true;
 	const dispatch = createEventDispatcher();
 </script>
-
-<div class={state} class:big={letter.length !== 1} on:click={() => dispatch("keystroke", letter)}>
-	{letter !== "*" ? letter : ""}<slot />
-</div>
-
+{#if visible}
+    <div class={state} class:big={letter.length !== 1} on:click={() => dispatch("keystroke", letter)}>
+	   {letter !== "*" ? letter : ""}<slot />
+    </div>
+{/if}
 <style>
 	div {
 		font-size: calc(var(--fs-tiny) + 6px);

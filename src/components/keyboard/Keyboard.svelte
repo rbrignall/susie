@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, onDestroy, onMount } from "svelte/internal";
-	import { keyStates, wordNumber, keyBoardToggle } from "../../stores";
+	import { keyStates, wordNumber, keyBoardToggle, easyMode } from "../../stores";
 	import { COLS, keys } from "../../utils";
 	import Key from "./Key.svelte";
 
@@ -41,7 +41,7 @@
 		if (e.key === "Escape") dispatch("esc");
 	}
     function toggleKeyboard() {
-        if (!disabled)
+        if (!disabled && !$easyMode)
             $keyBoardToggle = ($keyBoardToggle + 1) % 3;
     }
 
@@ -65,16 +65,16 @@
 			/>
 		{/each}
 	</div>
-	<div class="row">
+	<div class="row" class:padrow={$easyMode}>
     	<Key letter="*" 
             on:keystroke={toggleKeyboard}
             state={toggleState[$keyBoardToggle]}
+            visible={!$easyMode}
             >
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 <path d="M19.745 5a2.25 2.25 0 0 1 2.25 2.25v9.505a2.25 2.25 0 0 1-2.25 2.25H4.25A2.25 2.25 0 0 1 2 16.755V7.25A2.25 2.25 0 0 1 4.25 5h15.495Zm0 1.5H4.25a.75.75 0 0 0-.75.75v9.505c0 .414.336.75.75.75h15.495a.75.75 0 0 0 .75-.75V7.25a.75.75 0 0 0-.75-.75Zm-12.995 8h10.5a.75.75 0 0 1 .102 1.493L17.25 16H6.75a.75.75 0 0 1-.102-1.493l.102-.007h10.5h-10.5ZM16.5 11a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm-5.995 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm-3 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm6 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2ZM6 8a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm2.995 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm3 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm3 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2Zm3 0a1 1 0 1 1 0 2a1 1 0 0 1 0-2Z"/>
 			</svg>
         </Key>
-
     
 		{#each keys[1] as letter}
 			<Key
@@ -127,11 +127,9 @@
 		padding: 0 4px;
         touch-action: manipulation;
 	}
-    /*
-	.row:nth-of-type(2) {
+	.padrow {
 		padding: 0 30px;
 	}
-    */
 	svg {
 		fill: var(--fg-primary);
 		width: 24px;
