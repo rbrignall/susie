@@ -13,6 +13,7 @@
 
 	const dispatch = createEventDispatcher();
 
+    // This might be broken: showRefresh is always going to be false
     wordNumber.subscribe((m) => {
 		if (86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0)) > 0) {
 			showRefresh = false;
