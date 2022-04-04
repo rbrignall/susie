@@ -27,7 +27,7 @@
 		createKeyStates,
 		words,
 	} from "../utils";
-	import { keyStates, wordNumber, hardMode } from "../stores";
+	import { keyStates, wordNumber, easyMode } from "../stores";
 
 	export let word: string;
 	export let stats: Stats;
@@ -57,8 +57,8 @@
     }
     
     function writeKeystate(w: string, checkState: KeyState, setState: KeyState) {
+        game.validNormal = false;
         return w.split("").forEach(e => (($keyStates[e] !== checkState) && ($keyStates[e] = setState)));
-        game.validHard = false;
     }
     
     function updateKeyboard() {
@@ -118,7 +118,7 @@
 		} else if (words.contains(game.boardState[game.guesses])) {
 			const state = getState(word, game.boardState[game.guesses]);
 			game.evaluations[game.guesses] = state;
-            if(!$hardMode) updateKeyboard();
+            if($easyMode) updateKeyboard();
 
             ++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();
@@ -169,9 +169,9 @@
 
 	onMount(() => {
 		if (!(game.gameStatus === "IN_PROGRESS")) setTimeout(() => (showStats = true), delay);
-        //if (stats.gamesPlayed === 0) {
-        //    setTimeout(() => (showTutorial = true), delay);
-        //}
+        if (stats.gamesPlayed === 0) {
+            setTimeout(() => (showTutorial = true), delay);
+        }
 	});
 	// $: toaster.pop(word);
 </script>
@@ -231,7 +231,7 @@
 </Modal>
 
 <Modal bind:visible={showSettings}>
-	<Settings visible={showSettings} wordNumber={game.wordNumber} validHard={game.validHard} />
+	<Settings visible={showSettings} wordNumber={game.wordNumber} validNormal={game.validNormal} />
 </Modal>
 
 <style>

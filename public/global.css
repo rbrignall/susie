@@ -88,6 +88,7 @@ h3 {
 	margin-bottom: 10px;
     font-weight: 700;
     font-family: var(--tile-font);
+    font-size: var(--fs-medium);
 }
 .absent,
 .zero,

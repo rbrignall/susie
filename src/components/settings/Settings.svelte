@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { darkTheme, hardMode } from "../../stores";
+	import { darkTheme, easyMode } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
-	export let validHard: boolean;
+	export let validNormal: boolean;
 	export let visible: boolean;
 	export let wordNumber: number;
 	let tip = 0;
@@ -33,17 +33,17 @@
 		<h3>settings</h3>
 		<div
 			on:click={() => {
-				if (!validHard) {
-					toaster.pop("Game has already violated hard mode");
+				if (!validNormal) {
+					toaster.pop("Game has already used auto-highlighting");
 				}
 			}}
 		>
-			<Setting type="switch" bind:value={$hardMode} disabled={!validHard}>
-				<span slot="title">Hard Mode</span>
+			<Setting bind:value={$easyMode} disabled={!validNormal}>
+				<span slot="title">Easy Mode</span>
 				<span slot="desc">Turns off automatic keyboard highlighting.</span>
 			</Setting>
 		</div>
-		<Setting type="switch" bind:value={$darkTheme}>
+		<Setting bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
 		</Setting>
         <div style="display: flex; justify-content: space-between; align-items: center;">

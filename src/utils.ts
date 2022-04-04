@@ -73,7 +73,7 @@ export function createNewGame(): GameState {
         gameStatus: "IN_PROGRESS",
 		guesses: 0,
 		wordNumber: getWordNumber(),
-		validHard: true,
+		validNormal: true,
         boardState: [""],//Array(ROWS).fill(""),
         evaluations: [-1],//Array.from({ length: ROWS }, () => (-1)),
         keyStates: createKeyStates(),

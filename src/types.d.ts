@@ -23,7 +23,7 @@ type GameState = {
     gameStatus: "IN_PROGRESS" | "WIN" | "FAIL",
 	guesses: number,
 	wordNumber: number,
-	validHard: boolean,
+	validNormal: boolean,
     boardState: string[],
     evaluations: WordState[],
     keyStates: { [key: string]: KeyState },

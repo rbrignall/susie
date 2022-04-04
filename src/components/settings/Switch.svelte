@@ -11,7 +11,7 @@
 		cursor: unset;
 	}
 	div {
-		width: 32px;
+        width: 32px;
 		height: 20px;
 		border-radius: 10px;
 		background: var(--icon-color);

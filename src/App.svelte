@@ -7,7 +7,7 @@
 		words,
 	} from "./utils";
 	import Game from "./components/Game.svelte";
-	import { keyStates, hardMode, 
+	import { keyStates, easyMode, 
             darkTheme, wordNumber
     } from "./stores";
 	import { Toaster } from "./components/widgets";
@@ -21,12 +21,12 @@
 
     // Settings separated out:
     darkTheme.set(JSON.parse(localStorage.getItem("darkTheme")) as boolean || false);
-    hardMode.set(JSON.parse(localStorage.getItem("hardMode")) as boolean || false);
+    easyMode.set(JSON.parse(localStorage.getItem("easyMode")) as boolean || false);
     // N.B. wordNumber stores the index of the word!
     wordNumber.set(getWordNumber() % words.words.length);
     
     darkTheme.subscribe(s => localStorage.setItem("darkTheme",s));
-    hardMode.subscribe(s => localStorage.setItem("hardMode",s));
+    easyMode.subscribe(s => localStorage.setItem("easyMode",s));
 
 	wordNumber.subscribe(() => {        
         // Grab statistics. CreateDefaultStats looks for URL data
