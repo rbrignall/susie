@@ -46,11 +46,22 @@
 
 	let board: Board;
 	let timer: Timer;
-    
-    
+        
     function getUniqueLetters(str) {
         return String.prototype.concat(...new Set(str))
     }
+    
+    const commonCharacters = function (string1, string2) {
+        let duplicateCharacter = [];
+        for (let i = 0; i < string1.length; i += 1) {
+            if (!duplicateCharacter.includes(string1[i])) {
+                if (string2.includes(string1[i])) {
+                    duplicateCharacter.push(string1[i]);
+                } 
+            }
+        }
+        return duplicateCharacter;
+    };
     
     function countLetters(w: string, state: KeyState) {
         return w.split("").filter(e => $keyStates[e] === state).length;
@@ -63,18 +74,17 @@
     
     function updateKeyboard() {
         // Split and sort the letters alphabetically:
-        let allGuessedWords = game.boardState.map((w) => w.split("").sort().join(""));
+        let allGuessedWords = game.boardState;//.map((w) => w.split("").sort().join(""));
         
         allGuessedWords.slice().reverse().forEach((guessWord,i) => {
-            //let guessWord = allGuessedWords[game.guesses]; //game.boardState[game.guesses].split("").sort();
             let guessEval = game.evaluations.slice().reverse()[i];
 
             if(guessEval === 0) 
                 writeKeystate(guessWord,"ALL","absent");
-            else if(guessEval === 5) {
+            else if(guessEval === getUniqueLetters(guessWord).length) {
                 // Make all letters red, and grey out all others
                 writeKeystate(guessWord,"ALL","present");
-                writeKeystate(Object.entries($keyStates).join(""),"present","absent");
+                if(guessEval === COLS) writeKeystate(Object.entries($keyStates).join(""),"present","absent");
             } else {
                 let uniqueLetters = getUniqueLetters(guessWord);
 
@@ -88,6 +98,26 @@
                     writeKeystate(uniqueLetters,"present","absent");
             }
         });
+        // Now handle pairs of words
+        for (var i = 0; i <= game.guesses; i++)
+            for (var j= 0; j < i; j++) {
+                let comChars = commonCharacters(allGuessedWords[i],allGuessedWords[j]);
+                let uniqueUncommoni = getUniqueLetters(allGuessedWords[i]).split("").filter( ( el ) => !comChars.includes( el ) ).join("");
+                let uniqueUncommonj = getUniqueLetters(allGuessedWords[j]).split("").filter( ( el ) => !comChars.includes( el ) ).join("");
+
+                if (COLS - comChars.length === game.evaluations[i] - game.evaluations[j]) {
+                    writeKeystate(uniqueUncommoni,"ALL","present");
+                    writeKeystate(uniqueUncommonj,"ALL","absent");
+//                    console.log(allGuessedWords[i],allGuessedWords[j],comChars.join(""),uniqueUncommoni,uniqueUncommonj)
+                } else if (COLS - comChars.length === game.evaluations[j] - game.evaluations[i]) {
+                    writeKeystate(uniqueUncommonj,"ALL","present");
+                    writeKeystate(uniqueUncommoni,"ALL","absent");
+//                    console.log(allGuessedWords[i],allGuessedWords[j],comChars.join(""),uniqueUncommoni,uniqueUncommonj)
+                }
+                                    
+            }
+        
+        
         // Now update vowels and consonants:
         let vowels = "aeiou";
         let consonants = "bcdfghjklmnpqrstvwxyz";
@@ -107,7 +137,6 @@
         if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS)
             writeKeystate(vowels,"absent","present");
 
-        // TODO: Consider pairwise logical deductions
     }
     
     
