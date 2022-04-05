@@ -46,22 +46,30 @@
 
 	let board: Board;
 	let timer: Timer;
-        
+    
+    const vowels = "aeiou";
+    const consonants = "bcdfghjklmnpqrstvwxyz";
+    let numVowels=word.split("").filter(e => vowels.includes(e)).length; 
+
     function getUniqueLetters(str) {
         return String.prototype.concat(...new Set(str))
     }
     
-    const commonCharacters = function (string1, string2) {
-        let duplicateCharacter = [];
-        for (let i = 0; i < string1.length; i += 1) {
-            if (!duplicateCharacter.includes(string1[i])) {
-                if (string2.includes(string1[i])) {
-                    duplicateCharacter.push(string1[i]);
-                } 
-            }
+    function stringPairs (w1: string, w2: string) {
+        let w2arr = w2.split("");
+        let intersection = "";
+        let w1only = "";
+        for (let i = 0; i < w1.length; i++) {
+            let w2idx = w2arr.indexOf(w1[i]);
+            if (w2idx === -1) // not in w2
+                w1only += w1[i];
+            else {
+                intersection += w1[i];
+                w2arr[w2idx] = "";
+            }                
         }
-        return duplicateCharacter;
-    };
+        return [intersection, w1only, w2arr.join("")];
+    }
     
     function countLetters(w: string, state: KeyState) {
         return w.split("").filter(e => $keyStates[e] === state).length;
@@ -73,69 +81,72 @@
     }
     
     function updateKeyboard() {
-        // Split and sort the letters alphabetically:
-        let allGuessedWords = game.boardState;//.map((w) => w.split("").sort().join(""));
+        let curWord = game.boardState[game.guesses];
+        let curLetters = getUniqueLetters(curWord);
+        let curEval = game.evaluations[game.guesses];
+
+        // First, some basic one-time checks to the current guess
+        if(curEval === 0)
+            writeKeystate(curWord,"ALL","absent");
+        else if(curEval === COLS) {
+            writeKeystate(curWord,"ALL","present");
+            writeKeystate(Object.keys($keyStates).join(""),"present","absent"); // All letters found
+        }
+
+        // Next, compare most recent guess to previous guesses
+        for (var i = 0; i < game.guesses; i++) {
+            let oldWord = game.boardState[i];
+            let oldLetters = getUniqueLetters(oldWord);
+            let oldEval = game.evaluations[i];
+            
+            let [comChars, uniqueToCur, uniqueToOld] = stringPairs(curWord,oldWord);
+            //console.log(curWord,oldWord,comChars,uniqueToCur,uniqueToOld)
+
+            if (uniqueToCur.length === curEval - oldEval) {
+                writeKeystate(uniqueToCur,"ALL","present");
+                writeKeystate(uniqueToOld.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");
+            } else if (uniqueToCur.length === oldEval - curEval) {
+                writeKeystate(uniqueToOld,"ALL","present");
+                writeKeystate(uniqueToCur.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");            
+            }
+        }
         
-        allGuessedWords.slice().reverse().forEach((guessWord,i) => {
-            let guessEval = game.evaluations.slice().reverse()[i];
+        let numRedStart;
+        let numGreyStart;
+        
+        // The next code compares to current keyboard state
+        // so we iterate around and around until no changes occur        
+        do {
+            // Remember current keyboard state
+            numRedStart = countLetters(Object.keys($keyStates).join(""),"present");
+            numGreyStart = countLetters(Object.keys($keyStates).join(""),"absent");
 
-            if(guessEval === 0) 
-                writeKeystate(guessWord,"ALL","absent");
-            else if(guessEval === getUniqueLetters(guessWord).length) {
-                // Make all letters red, and grey out all others
-                writeKeystate(guessWord,"ALL","present");
-                if(guessEval === COLS) writeKeystate(Object.entries($keyStates).join(""),"present","absent");
-            } else {
-                let uniqueLetters = getUniqueLetters(guessWord);
+            // Go back through all guesses.
+            for (i = 0; i <= game.guesses; i++) {
+        
+                let guessWord = game.boardState[i];
+                let guessEval = game.evaluations[i];
+                let guessLetters = getUniqueLetters(guessWord);
 
-                // Mark all remaining letters red when the right number are grey
-//console.log(guessWord, guessEval, countLetters(guessWord, "absent"), countLetters(guessWord, "present"));
+                // See if current keyboard gives any more information
                 if(countLetters(guessWord, "absent") === COLS - guessEval)
-                    writeKeystate(uniqueLetters,"absent","present");
-                // Mark all remaining letters grey if enough red letters already known
-                // N.B. checks only unique letters in guess
-                if(countLetters(uniqueLetters, "present") === guessEval)
-                    writeKeystate(uniqueLetters,"present","absent");
-            }
-        });
-        // Now handle pairs of words
-        for (var i = 0; i <= game.guesses; i++)
-            for (var j= 0; j < i; j++) {
-                let comChars = commonCharacters(allGuessedWords[i],allGuessedWords[j]);
-                let uniqueUncommoni = getUniqueLetters(allGuessedWords[i]).split("").filter( ( el ) => !comChars.includes( el ) ).join("");
-                let uniqueUncommonj = getUniqueLetters(allGuessedWords[j]).split("").filter( ( el ) => !comChars.includes( el ) ).join("");
-
-                if (COLS - comChars.length === game.evaluations[i] - game.evaluations[j]) {
-                    writeKeystate(uniqueUncommoni,"ALL","present");
-                    writeKeystate(uniqueUncommonj,"ALL","absent");
-//                    console.log(allGuessedWords[i],allGuessedWords[j],comChars.join(""),uniqueUncommoni,uniqueUncommonj)
-                } else if (COLS - comChars.length === game.evaluations[j] - game.evaluations[i]) {
-                    writeKeystate(uniqueUncommonj,"ALL","present");
-                    writeKeystate(uniqueUncommoni,"ALL","absent");
-//                    console.log(allGuessedWords[i],allGuessedWords[j],comChars.join(""),uniqueUncommoni,uniqueUncommonj)
-                }
-                                    
+                    writeKeystate(guessLetters,"absent","present");
+                if(countLetters(guessLetters, "present") === guessEval)
+                    writeKeystate(guessLetters,"present","absent");
             }
         
+            // Next, check vowels and consonants
+            if (countLetters(vowels,"present") === numVowels)
+                writeKeystate(vowels,"present","absent");
+            if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels > 0) 
+                writeKeystate(vowels,"absent","present");
         
-        // Now update vowels and consonants:
-        let vowels = "aeiou";
-        let consonants = "bcdfghjklmnpqrstvwxyz";
-        let numVowels=word.split("").filter(e => vowels.includes(e)).length;
-
-        // Mark all remaining vowels grey if right number are red
-        if (numVowels === countLetters(vowels,"present"))
-            writeKeystate(vowels,"present","absent");
-        // If only one vowel is non-grey (and word contains >0 vowels), mark it red
-        if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels > 0) 
-            writeKeystate(vowels,"absent","present");
-        
-        // Now the same for consonants
-        if (COLS - numVowels === countLetters(consonants,"present"))
-            writeKeystate(consonants,"present","absent");
-        // If only one consonant is non-grey (and word contains >0 consonants), mark it red
-        if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS)
-            writeKeystate(vowels,"absent","present");
+            if (countLetters(consonants,"present") === COLS - numVowels)
+                writeKeystate(consonants,"present","absent");
+            if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS)
+                writeKeystate(vowels,"absent","present");
+                
+        } while (countLetters(Object.keys($keyStates).join(""),"present") > numRedStart || countLetters(Object.keys($keyStates).join(""),"absent") > numGreyStart);
 
     }
     
