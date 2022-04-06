@@ -3,19 +3,29 @@
   "name": "Susie",
   "icons": [
     {
-      "src": "/img/susie_logo_32x32.png",
+      "src": "/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "/favicon-32x32.png",
       "type": "image/png",
       "sizes": "32x32"
     },
     {
-      "src": "/img/susie_logo_192x192.png",
+      "src": "/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
       "type": "image/png",
       "sizes": "192x192"
     }
   ],
   "start_url": "https://susie.rbrignall.org.uk/",
-  "background_color": "#6aaa64",
+  "background_color": "ffffff",
   "display": "standalone",
-  "theme_color": "#6aaa64",
+  "theme_color": "#ffffff",
   "description": "Can you guess Susie's word"
 }
