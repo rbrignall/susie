@@ -147,6 +147,7 @@
     }
 
 	.examples {
+        font-family: var(--tile-font);
 		:global(.row > *) {
 			height: 100%;
 		}
