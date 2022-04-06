@@ -268,6 +268,10 @@
 		/>
 		<Share slot="2" state={game} />
 	</Separator>
+    <h3>Support us</h3>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <a href="https://www.buymeacoffee.com/benponniahc" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" class="coffee" ></a>
+    </div>
 </Modal>
 
 <Modal bind:visible={showSettings}>
@@ -285,4 +289,10 @@
 		margin: 0px auto;
 		position: relative;
 	}
+    .coffee {
+        height: 40px !important;
+        width: 144px !important; 
+        margin: 5px;
+    }
+
 </style>
