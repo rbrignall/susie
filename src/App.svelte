@@ -21,7 +21,8 @@
 
     // Settings separated out:
     darkTheme.set(JSON.parse(localStorage.getItem("darkTheme")) as boolean || false);
-    easyMode.set(JSON.parse(localStorage.getItem("easyMode")) as boolean || false);
+    
+    easyMode.set(JSON.parse(localStorage.getItem("easyMode") ?? true) as boolean);
     // N.B. wordNumber stores the index of the word!
     wordNumber.set(getWordNumber() % words.words.length);
     
