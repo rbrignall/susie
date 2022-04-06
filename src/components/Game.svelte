@@ -251,7 +251,7 @@
 <Modal
 	bind:visible={showTutorial}
 >
-	<Tutorial visible={showTutorial} />
+	<Tutorial visible={showTutorial} firstvisit={(stats.gamesPlayed === 0)} />
 </Modal>
 
 
