@@ -178,7 +178,7 @@
 	function win() {
 		board.bounce(game.guesses - 1);
         game.gameStatus = "WIN";
-		setTimeout(() => toaster.pop(PRAISE[Math.min(game.guesses, PRAISE.length) - 1]), DELAY_INCREMENT * game.guesses);
+		setTimeout(() => toaster.pop(PRAISE[Math.min(game.guesses, PRAISE.length) - 1]), DELAY_INCREMENT);
 		setTimeout(() => (showStats = true), delay * 1.4);
         if (stats.guesses[game.guesses])
             ++stats.guesses[game.guesses];
