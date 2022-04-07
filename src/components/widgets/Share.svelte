@@ -30,16 +30,51 @@
 
     var canvas = document.createElement("canvas");
 
-canvas.width = 200;
-canvas.height = 200;
+    canvas.width = 180;
+    canvas.height = (state.guesses+1) * 30;
 
-var url = canvas.toDataURL();
 
-var a = document.createElement('a');
-a.download = 'my.png';
-a.href = url;
-a.textContent = 'Download PNG';
+    canvas.id = "CursorLayer";
+    canvas.style.zIndex = 8;
+    canvas.style.position = "absolute";
+    canvas.style.top = "100px";
+    canvas.style.left = "50px";
+    canvas.style.border = "1px solid";
 
+
+//var body = document.getElementsByTagName("body")[0];
+document.body.appendChild(canvas);
+
+//cursorLayer = document.getElementById("CursorLayer");
+
+//console.log(cursorLayer);
+
+	
+const colourray = ["#3a3a3c","#668cff","#6666ff","#9966ff","#cc33ff","#ff6666"];
+var ctx = canvas.getContext("2d");
+ctx.font = "700 24px 'Exo'";
+ctx.textAlign = "center";
+ctx.textBaseline = "bottom";
+for (let i=0; i < 5; i++) {
+    ctx.fillStyle = colourray[i+1];
+    ctx.fillText("SUSIE"[i], 15+i*30, 30);
+}
+    
+for (let i=0; i < state.guesses; i++) {
+    ctx.fillStyle = colourray[state.evaluations[i]];
+    ctx.fillRect(0, 30*(i+1), 150, 30);
+    ctx.fillStyle = "#000000";
+    ctx.fillText(state.evaluations[i], 165, 30*(i+2));
+}
+
+
+    var canvasurl = canvas.toDataURL();
+
+    var a = document.createElement('a');
+    a.download = 'my.png';
+    a.href = canvasurl;
+    a.textContent = 'Download PNG';
+    //document.getElementById("canvasdiv").appendChild(a);
 
 </script>
 <h3>share</h3>
@@ -60,6 +95,7 @@ a.textContent = 'Download PNG';
 	   </svg>
        Copy
     </div>
+    <div id="canvasdiv"></div>
     <div class="copybutton"
         on:click={() => {
             navigator.clipboard.writeText(stats.concat(url));
