@@ -77,6 +77,7 @@ export function createNewGame(): GameState {
         boardState: [""],//Array(ROWS).fill(""),
         evaluations: [-1],//Array.from({ length: ROWS }, () => (-1)),
         keyStates: createKeyStates(),
+        explainer: [],
 	};
 }
 

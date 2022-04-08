@@ -6,6 +6,7 @@
 	import { onMount, setContext } from "svelte";
 	import Settings from "./settings";
 	import {
+        Explainer,
 		Share,
 		Separator,
 //		Definition,
@@ -43,6 +44,7 @@
 	let showSettings = false;
 	let showStats = false;
 	let showRefresh = false;
+    let showExplainer = false;
 
 	let board: Board;
 	let timer: Timer;
@@ -77,20 +79,37 @@
     
     function writeKeystate(w: string, checkState: KeyState, setState: KeyState) {
         game.validNormal = false;
-        return w.split("").forEach(e => (($keyStates[e] !== checkState) && ($keyStates[e] = setState)));
+        let changed = "";
+        w.split("").forEach(e => {
+            if(!([checkState,setState].includes($keyStates[e]))) {
+                $keyStates[e] = setState;
+                changed += e;
+            }
+        })
+
+        return changed;
+    }
+    
+    function logExplainer(changes: string, reason: string) {
+        changes.split('').forEach(e => (game.explainer.push([e, reason])));
     }
     
     function updateKeyboard() {
         let curWord = game.boardState[game.guesses];
         let curLetters = getUniqueLetters(curWord);
         let curEval = game.evaluations[game.guesses];
+        let changed = [];
 
         // First, some basic one-time checks to the current guess
-        if(curEval === 0)
-            writeKeystate(curWord,"ALL","absent");
+        if(curEval === 0) {
+            changed = writeKeystate(curWord,"ALL","absent");
+            logExplainer(changed, curWord.toUpperCase() + " scored 0.");
+        }
         else if(curEval === COLS) {
-            writeKeystate(curWord,"ALL","present");
-            writeKeystate(Object.keys($keyStates).join(""),"present","absent"); // All letters found
+            changed = writeKeystate(curWord,"ALL","present");
+            logExplainer(changed, curWord.toUpperCase() + " scored " + COLS + ".");            
+            changed = writeKeystate(Object.keys($keyStates).join(""),"present","absent");
+            logExplainer(changed, curWord.toUpperCase() + " scored " + COLS + " so all letters found.");
         }
 
         // Next, compare most recent guess to previous guesses
@@ -103,11 +122,13 @@
             //console.log(curWord,oldWord,comChars,uniqueToCur,uniqueToOld)
 
             if (uniqueToCur.length === curEval - oldEval) {
-                writeKeystate(uniqueToCur,"ALL","present");
-                writeKeystate(uniqueToOld.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");
+                changed = writeKeystate(uniqueToCur,"ALL","present");
+                changed += writeKeystate(uniqueToOld.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");
+                logExplainer(changed, "Comparing " + curWord.toUpperCase() + " (" + curEval + ") and " + oldWord.toUpperCase() + " (" + oldEval + ").");            
             } else if (uniqueToCur.length === oldEval - curEval) {
-                writeKeystate(uniqueToOld,"ALL","present");
-                writeKeystate(uniqueToCur.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");            
+                changed = writeKeystate(uniqueToOld,"ALL","present");
+                changed += writeKeystate(uniqueToCur.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");            
+                logExplainer(changed, "Comparing " + curWord.toUpperCase() + " (" + curEval + ") and " + oldWord.toUpperCase() + " (" + oldEval + ").");            
             }
         }
         
@@ -129,22 +150,34 @@
                 let guessLetters = getUniqueLetters(guessWord);
 
                 // See if current keyboard gives any more information
-                if(countLetters(guessWord, "absent") === COLS - guessEval)
-                    writeKeystate(guessLetters,"absent","present");
-                if(countLetters(guessLetters, "present") === guessEval)
-                    writeKeystate(guessLetters,"present","absent");
+                if(countLetters(guessWord, "absent") === COLS - guessEval) {
+                    changed = writeKeystate(guessLetters,"absent","present");
+                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (COLS - guessEval === 1 ? "letter is" : (COLS - guessEval) + "letters are") + " not in the word.");     
+                }
+                if(countLetters(guessLetters, "present") === guessEval) {
+                    changed = writeKeystate(guessLetters,"present","absent");
+                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (guessEval === 1 ? "letter is" : guessEval + "letters are") + " in the word.");
+                }
             }
         
             // Next, check vowels and consonants
-            if (countLetters(vowels,"present") === numVowels)
-                writeKeystate(vowels,"present","absent");
-            if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels > 0) 
-                writeKeystate(vowels,"absent","present");
+            if (countLetters(vowels,"present") === numVowels) {
+                changed = writeKeystate(vowels,"present","absent");
+                logExplainer(changed, "Found " + numVowels + " vowels in word: all others absent.");            
+            }
+            if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels > 0) {
+                changed = writeKeystate(vowels,"absent","present");
+                logExplainer(changed, "Found " + (vowels.length - 1) + " vowels not in word, so " + changed.toUpperCase() + " is present.");
+            }
         
-            if (countLetters(consonants,"present") === COLS - numVowels)
-                writeKeystate(consonants,"present","absent");
-            if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS)
-                writeKeystate(vowels,"absent","present");
+            if (countLetters(consonants,"present") === COLS - numVowels) {
+                changed = writeKeystate(consonants,"present","absent");
+                logExplainer(changed, "Found " + (COLS - numVowels) + " consonants in word: all others absent.");            
+            }
+            if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS) {
+                changed = writeKeystate(vowels,"absent","present");
+                logExplainer(changed, "Found " + (consonants.length - 1) + " consonants not in word, so " + changed.toUpperCase() + " is present.");
+            }
                 
         } while (countLetters(Object.keys($keyStates).join(""),"present") > numRedStart || countLetters(Object.keys($keyStates).join(""),"absent") > numGreyStart);
 
@@ -239,6 +272,7 @@
 		}}
 		bind:value={game.boardState[game.guesses]}
 		on:submitWord={submitWord}
+        on:showExplainer={() => (showExplainer = true)}
 		on:esc={() => {
 			showTutorial = false;
 			showStats = false;
@@ -254,7 +288,11 @@
 	<Tutorial visible={showTutorial} firstvisit={((stats.gamesPlayed === 0) && game.validNormal)} />
 </Modal>
 
-
+<Modal
+	bind:visible={showExplainer}
+>
+	<Explainer gamestate={game} />
+</Modal>
 
 <Modal bind:visible={showStats}>
 		<Statistics data={stats} />
