@@ -59,12 +59,12 @@ for (let i=0; i < 5; i++) {
     ctx.fillStyle = colourray[i+1];
     ctx.fillText("SUSIE"[i], 15+i*30, 30);
 }
-    
+ctx.font = "700 18px 'Exo'";    
 for (let i=0; i < state.guesses; i++) {
     ctx.fillStyle = colourray[state.evaluations[i]];
     ctx.fillRect(0, 30*(i+1), 150, 30);
     ctx.fillStyle = "#000000";
-    ctx.fillText(state.evaluations[i], 165, 30*(i+2));
+    ctx.fillText(state.evaluations[i], 165, 30*(i+2)-4);
 }
 
 
