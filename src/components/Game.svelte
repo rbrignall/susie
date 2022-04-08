@@ -152,11 +152,11 @@
                 // See if current keyboard gives any more information
                 if(countLetters(guessWord, "absent") === COLS - guessEval) {
                     changed = writeKeystate(guessLetters,"absent","present");
-                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (COLS - guessEval === 1 ? "letter is" : (COLS - guessEval) + "letters are") + " not in the word.");     
+                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (COLS - guessEval === 1 ? "letter is" : (COLS - guessEval) + " letters are") + " not in the word.");     
                 }
                 if(countLetters(guessLetters, "present") === guessEval) {
                     changed = writeKeystate(guessLetters,"present","absent");
-                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (guessEval === 1 ? "letter is" : guessEval + "letters are") + " in the word.");
+                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (guessEval === 1 ? "letter is" : guessEval + " letters are") + " in the word.");
                 }
             }
         
