@@ -27,6 +27,7 @@ type GameState = {
     boardState: string[],
     evaluations: WordState[],
     keyStates: { [key: string]: KeyState },
+    explainer: string[][],
 };
 
 
