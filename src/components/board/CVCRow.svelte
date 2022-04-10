@@ -1,19 +1,16 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
-	import { COLS, getWordNumber } from "../../utils";
-
+	import { COLS } from "../../utils";
 	import Tile from "./Tile.svelte";
-    export let word: string;
+    
     export let width: number;
+    export let CVCpattern: string[];
     
 	const dispatch = createEventDispatcher();
 	let animation = "";
 	let tiles: Tile[] = [];
-    let cvcpattern = [];
-    let isVowel={a:1,e:1,i:1,o:1,u:1}
-    word.split('').forEach((letter,i)=>{
-        if(isVowel[letter]){cvcpattern.push('V')} else {cvcpattern.push('C')}
-    })
+    
+
 </script>
 
 <div
@@ -24,7 +21,7 @@
 >
         <Tile value="" />
 	{#each Array(COLS) as _, i}
-    		<Tile value={cvcpattern[i]} />
+    		<Tile value={CVCpattern[i]} />
 	{/each}
 </div>
 

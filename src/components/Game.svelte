@@ -26,7 +26,10 @@
 		createNewGame,
         getWordNumber,
 		createKeyStates,
+        setCVC,
 		words,
+        vowels,
+        consonants
 	} from "../utils";
 	import { keyStates, wordNumber, easyMode } from "../stores";
 
@@ -48,10 +51,11 @@
 
 	let board: Board;
 	let timer: Timer;
+    let CVCpattern: string[];
     
-    const vowels = "aeiou";
-    const consonants = "bcdfghjklmnpqrstvwxyz";
     let numVowels=word.split("").filter(e => vowels.includes(e)).length; 
+
+
 
     function getUniqueLetters(str) {
         return String.prototype.concat(...new Set(str))
@@ -237,6 +241,7 @@
         $keyStates = createKeyStates();
 		showStats = false;
 		showRefresh = false;
+        CVCpattern = setCVC(word);
 		//timer.reset($mode);
 	}
 
@@ -247,6 +252,8 @@
         }
 	});
 	// $: toaster.pop(word);
+    
+    CVCpattern = setCVC(word);
 </script>
 
 <svelte:body on:click={board.hideCtx} on:contextmenu={board.hideCtx} />
@@ -263,6 +270,7 @@
 	<Board
 		bind:this={board}
 		bind:value={game.boardState}
+        bind:CVCpattern
 		evaluations={game.evaluations}
 		guesses={game.guesses}
 	/>
