@@ -96,7 +96,8 @@ h3 {
 .two,
 .three,
 .four, 
-.five {
+.five,
+.present {
 	color: var(--evaluated-key-color);
 }
 .absent,

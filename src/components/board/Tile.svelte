@@ -8,7 +8,7 @@
 	export let value = "";
 	export let position = 0;
 	export function bounce() {
-		setTimeout(() => (animation = "bounce"), (6 + position) * DELAY_INCREMENT);
+		setTimeout(() => (animation = "bounce"), position * DELAY_INCREMENT);
 		//WAS: setTimeout(() => (animation = "bounce"), (ROWS + position) * DELAY_INCREMENT);
 	}
 	let s: string;

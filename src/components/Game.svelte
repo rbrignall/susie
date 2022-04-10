@@ -109,7 +109,7 @@
             changed = writeKeystate(curWord,"ALL","present");
             logExplainer(changed, curWord.toUpperCase() + " scored " + COLS + ".");            
             changed = writeKeystate(Object.keys($keyStates).join(""),"present","absent");
-            logExplainer(changed, curWord.toUpperCase() + " scored " + COLS + " so all letters found.");
+            logExplainer(changed, "All " + COLS + " letters found.");
         }
 
         // Next, compare most recent guess to previous guesses
@@ -124,11 +124,11 @@
             if (uniqueToCur.length === curEval - oldEval) {
                 changed = writeKeystate(uniqueToCur,"ALL","present");
                 changed += writeKeystate(uniqueToOld.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");
-                logExplainer(changed, "Comparing " + curWord.toUpperCase() + " (" + curEval + ") and " + oldWord.toUpperCase() + " (" + oldEval + ").");            
+                logExplainer(changed, "Compared " + curWord.toUpperCase() + " (" + curEval + ") with " + oldWord.toUpperCase() + " (" + oldEval + ").");            
             } else if (uniqueToCur.length === oldEval - curEval) {
                 changed = writeKeystate(uniqueToOld,"ALL","present");
                 changed += writeKeystate(uniqueToCur.split("").filter(e => !comChars.includes(e)).join(""),"ALL","absent");            
-                logExplainer(changed, "Comparing " + curWord.toUpperCase() + " (" + curEval + ") and " + oldWord.toUpperCase() + " (" + oldEval + ").");            
+                logExplainer(changed, "Compared " + curWord.toUpperCase() + " (" + curEval + ") with " + oldWord.toUpperCase() + " (" + oldEval + ").");            
             }
         }
         
@@ -152,11 +152,11 @@
                 // See if current keyboard gives any more information
                 if(countLetters(guessWord, "absent") === COLS - guessEval) {
                     changed = writeKeystate(guessLetters,"absent","present");
-                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (COLS - guessEval === 1 ? "letter is" : (COLS - guessEval) + " letters are") + " not in the word.");     
+                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): Know which " + (COLS - guessEval === 1 ? "1 letter is" : (COLS - guessEval) + " letters are") + " not in the word.");     
                 }
                 if(countLetters(guessLetters, "present") === guessEval) {
                     changed = writeKeystate(guessLetters,"present","absent");
-                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): we know which " + (guessEval === 1 ? "letter is" : guessEval + " letters are") + " in the word.");
+                    logExplainer(changed, guessWord.toUpperCase() + " (" + guessEval + "): Know which " + (guessEval === 1 ? "1 letter is" : guessEval + " letters are") + " in the word.");
                 }
             }
         
