@@ -1,16 +1,13 @@
 <script lang="ts">
 	import { words, COLS } from "../../utils";
-    import { wordNumber } from "../../stores"
     
 	import CVCRow from "./CVCRow.svelte";
 	import Row from "./Row.svelte";
-//	import ContextMenu from "../widgets/ContextMenu.svelte";
 
 	export let value: string[];
-//	export let board: GameBoard;
-//  export let boardState: string[];
     export let evaluations: WordState[];
 	export let guesses: number;
+    export let CVCpattern: string[];
 	export function shake(row: number) {
 		rows[row].shake();
 	}
@@ -45,7 +42,7 @@
 
 <div style="height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height));">
     <CVCRow
-            word={words.words[$wordNumber]} width={getRowDim(innerWidth,innerHeight)}
+            width={getRowDim(innerWidth,innerHeight)} bind:CVCpattern
     />
     <div class="board" 
         id="boardid" 

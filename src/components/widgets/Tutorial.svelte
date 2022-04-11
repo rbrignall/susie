@@ -24,7 +24,7 @@
 
 <div>To help you close in on the word, keys on the keyboard can be highlighted grey (not in the word) or red (in the word).</div>
 
-<div>In "Normal" mode, you make your own logical deductions and can highlight keys for yourself [<a href="https://www.youtube.com/watch?v=_N5s4zeemUM" target="_blank">Watch a short video</a>]. In "Easy" mode, the programme will make deductions and highlight keys for you.</div>
+<div>In "Normal" mode, you make your own logical deductions and can highlight keys for yourself [<a href="https://www.youtube.com/watch?v=_N5s4zeemUM" target="_blank">Watch a short video</a>]. In "Easy" mode, the programme will highlight keys for you (press "?" to see what deductions have been made).</div>
 
 {#if firstvisit}
 <div>Choose which mode you would like to play.</div>

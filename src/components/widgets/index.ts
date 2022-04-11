@@ -1,3 +1,4 @@
+export { default as Explainer } from "./Explainer.svelte";
 export { default as Separator } from "./Separator.svelte";
 export { default as Share } from "./Share.svelte";
 export { default as Tutorial } from "./Tutorial.svelte";

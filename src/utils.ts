@@ -12,6 +12,9 @@ export const words = {
 	},
 };
 
+export const vowels = "aeiou";
+export const consonants = "bcdfghjklmnpqrstvwxyz";
+
 
 export function getState(word: string, guess: string): number {
 	const charArr = word.split("");
@@ -77,7 +80,19 @@ export function createNewGame(): GameState {
         boardState: [""],//Array(ROWS).fill(""),
         evaluations: [-1],//Array.from({ length: ROWS }, () => (-1)),
         keyStates: createKeyStates(),
+        explainer: [],
 	};
+}
+
+export function setCVC(word: string) {
+    let cvcpattern = [];
+    word.split('').forEach((letter,i)=>{
+        if(vowels.includes(letter)) 
+            cvcpattern.push('V') 
+        else 
+            cvcpattern.push('C')
+    })
+    return cvcpattern;
 }
 
 

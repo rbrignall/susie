@@ -6,8 +6,13 @@ const filesToCache = [
 	"./global.css",
 	"./index.html",
 	"./manifest.json",
+	"./site.webmanifest",
 	"./build/bundle.css",
-	"./build/bundle.js"
+	"./build/bundle.js",
+    "./favicon.ico",
+    "./apple-touch-icon",
+    "./android-chrome-192x192.png",
+    "./android-chrome-512x512.png"
 ];
 
 

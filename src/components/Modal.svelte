@@ -72,7 +72,7 @@
 		margin: 5% auto;
 		transition: all 0.3s ease;
 		> :global(*:not(h3)) {
-			margin-bottom: 15px;
+			margin-bottom: 5px;
 		}
 	}
 </style>

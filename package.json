@@ -1,6 +1,6 @@
 {
-  "name": "n-erdle",
-  "description": "Wordle for Newton Europe.",
+  "name": "Susie",
+  "description": "The word guessing game",
   "version": "1.0.0",
   "private": "true",
   "scripts": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/n-erdle/open-n-erdle.git"
+    "url": "git+https://github.com/rbrignall/susie.git"
   },
   "keywords": [],
   "author": "rbrignall",
   "bugs": {
-    "url": "https://github.com/n-erdle/open-n-erdle/issues"
+    "url": "https://github.com/rbrignall/susie/issues"
   },
-  "homepage": "https://github.com/n-erdle/open-n-erdle#readme",
+  "homepage": "https://github.com/rbrignall/susie#readme",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",

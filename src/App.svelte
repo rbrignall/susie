@@ -40,6 +40,8 @@
             state = createNewGame();
         } else {
             // TODO: Add checks for missing items in temp (e.g. evaluation being null)
+            if(!(temp.explainer))
+                temp.explainer = [];
             state = temp;
 		}
 		// Set the letter states when data for a new game mode is loaded so the keyboard is correct

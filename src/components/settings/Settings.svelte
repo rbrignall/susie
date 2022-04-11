@@ -73,7 +73,7 @@
     <div class="footer">
         <div>Concept by <a href="http://benponniah.com/" target="_blank">Ben Ponniah</a>. Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
         <div class="word">
-            Game #{wordNumber+1}
+            Game #{wordNumber+1} v1.0
         </div>
     </div>
 </div>
