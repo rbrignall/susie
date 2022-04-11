@@ -48,7 +48,7 @@ export function newSeed() {
 }
 
 export function getWordNumber() {
-    const numbleOneDate = new Date(2022,3,6,0,0,0,0).setHours(0,0,0,0)
+    const numbleOneDate = new Date(2022,3,11,0,0,0,0).setHours(0,0,0,0)
     const now = new Date().setHours(0,0,0,0)
     const msInDay = 86400000
     return Math.floor((now - numbleOneDate) / msInDay) //% WORDS.length
