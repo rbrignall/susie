@@ -1,5 +1,5 @@
 // Increase the v number when the app is updated
-const staticCacheName = "susie-v1.0.0";
+const staticCacheName = "susie-v1.0.1";
 
 const filesToCache = [
 	"./",
@@ -10,7 +10,7 @@ const filesToCache = [
 	"./build/bundle.css",
 	"./build/bundle.js",
     "./favicon.ico",
-    "./apple-touch-icon",
+    "./apple-touch-icon.png",
     "./android-chrome-192x192.png",
     "./android-chrome-512x512.png"
 ];

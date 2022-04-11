@@ -8,7 +8,7 @@
 	const toaster = getContext<Toaster>("toaster");
     const url ="https://susie.rbrignall.org.uk";
 
-    $: stats = `Susie ${(state.wordNumber+1)} in ${
+    $: stats = `Susie ${(state.wordNumber)} in ${
 		(state.gameStatus === 'WIN') ? state.guesses : "X"
 	}:\n${state.evaluations.map((r) => r === 0 ? "0️⃣" : (r === 1 ? "1️⃣" : (r === 2 ? "2️⃣" : (r === 3 ? "3️⃣" : (r === 4 ? "4️⃣" : "5️⃣"))))).join("")
     }\n`;
