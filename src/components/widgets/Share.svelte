@@ -8,12 +8,74 @@
 	const toaster = getContext<Toaster>("toaster");
     const url ="https://susie.rbrignall.org.uk";
 
-	/* TODO: reinstate some kind of stats */
     $: stats = `Susie ${(state.wordNumber)} in ${
 		(state.gameStatus === 'WIN') ? state.guesses : "X"
 	}:\n${state.evaluations.map((r) => r === 0 ? "0️⃣" : (r === 1 ? "1️⃣" : (r === 2 ? "2️⃣" : (r === 3 ? "3️⃣" : (r === 4 ? "4️⃣" : "5️⃣"))))).join("")
     }\n`;
+
+
     
+    function copyCanvasContentsToClipboard(canvas, onDone, onError) {
+        canvas.toBlob(function (blob) {
+            let data = [new ClipboardItem({ [blob.type]: blob })];
+
+            navigator.clipboard.write(data).then(function () {
+                onDone();
+            }, function (err) {
+                onError(err);
+            })
+        });
+    }
+
+
+    var canvas = document.createElement("canvas");
+
+    canvas.width = 180;
+    canvas.height = (state.guesses+1) * 30;
+
+
+    canvas.id = "CursorLayer";
+    canvas.style.zIndex = 8;
+    canvas.style.position = "absolute";
+    canvas.style.top = "100px";
+    canvas.style.left = "50px";
+    canvas.style.border = "1px solid";
+
+
+//var body = document.getElementsByTagName("body")[0];
+document.body.appendChild(canvas);
+
+//cursorLayer = document.getElementById("CursorLayer");
+
+//console.log(cursorLayer);
+
+	
+const colourray = ["#3a3a3c","#668cff","#6666ff","#9966ff","#cc33ff","#ff6666"];
+var ctx = canvas.getContext("2d");
+ctx.font = "700 24px 'Exo'";
+ctx.textAlign = "center";
+ctx.textBaseline = "bottom";
+for (let i=0; i < 5; i++) {
+    ctx.fillStyle = colourray[i+1];
+    ctx.fillText("SUSIE"[i], 15+i*30, 30);
+}
+ctx.font = "700 18px 'Exo'";    
+for (let i=0; i < state.guesses; i++) {
+    ctx.fillStyle = colourray[state.evaluations[i]];
+    ctx.fillRect(0, 30*(i+1), 150, 30);
+    ctx.fillStyle = "#000000";
+    ctx.fillText(state.evaluations[i], 165, 30*(i+2)-4);
+}
+
+
+    var canvasurl = canvas.toDataURL();
+
+    var a = document.createElement('a');
+    a.download = 'my.png';
+    a.href = canvasurl;
+    a.textContent = 'Download PNG';
+    //document.getElementById("canvasdiv").appendChild(a);
+
 </script>
 <h3>share</h3>
 <div class="sharecontainer">
@@ -32,6 +94,21 @@
 		/>
 	   </svg>
        Copy
+    </div>
+    <div id="canvasdiv"></div>
+    <div class="copybutton"
+        on:click={() => {
+            navigator.clipboard.writeText(stats.concat(url));
+		    toaster.pop("Copied to clipboard");    
+        }}
+    >
+	   <svg xmlns="http://www.w3.org/2000/svg" height="16" viewBox="0 0 24 24" width="16">
+		<path
+			fill="white"
+			d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
+		/>
+	   </svg>
+       Save image
     </div>
 </div>
 <style>
