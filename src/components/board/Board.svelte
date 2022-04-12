@@ -42,7 +42,7 @@
 
 <div style="height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height));">
     <CVCRow
-            width={getRowDim(innerWidth,innerHeight)} bind:CVCpattern
+            width={getRowDim(innerWidth,innerHeight) + 40} bind:CVCpattern
     />
     <div class="board" 
         id="boardid" 
@@ -64,11 +64,12 @@
 
 <style>
 	.board {
-        overflow-y: scroll;
+        overflow-y: auto;
+        overflow-x: hidden;
 		display: grid;
 		grid-template-rows: repeat(var(--repeat), 1fr);
 		grid-gap: 0px;
-		padding: 0px;
+		padding: 0px 20px; // Allows for vertical scroll bar
 		position: relative;
 	}
 </style>
