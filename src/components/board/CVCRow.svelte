@@ -27,6 +27,7 @@
 
 <style lang="scss">
 	.board-row {
+        padding: 0px 20px;
 		display: grid;
 		grid-template-columns: repeat(calc(var(--cols) + 2), 1fr);
 		grid-gap: 0px;

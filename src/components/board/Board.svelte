@@ -42,11 +42,11 @@
 
 <div style="height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height));">
     <CVCRow
-            width={getRowDim(innerWidth,innerHeight)} bind:CVCpattern
+            width={getRowDim(innerWidth,innerHeight) + 40} bind:CVCpattern
     />
     <div class="board" 
         id="boardid" 
-        style="width: {getRowDim(innerWidth,innerHeight)}px; max-height: calc({innerHeight}px - 2.2em - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
+        style="width: {getRowDim(innerWidth,innerHeight)+40}px; max-height: calc({innerHeight}px - 2.2em - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
         bind:this={scrollBoxObj}
     >
     {#each value as _, i}
@@ -64,11 +64,12 @@
 
 <style>
 	.board {
-        overflow-y: scroll;
+        overflow-y: auto;
+        overflow-x: hidden;
 		display: grid;
 		grid-template-rows: repeat(var(--repeat), 1fr);
 		grid-gap: 0px;
-		padding: 0px;
+		padding: 0px 20px;
 		position: relative;
 	}
 </style>
