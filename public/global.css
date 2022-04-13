@@ -28,7 +28,7 @@
 
 	--fg-primary: #d7dadc;
 	--fg-secondary: #818384;
-	--icon-color: #565758;
+	--icon-color: var(--fg-primary);
 	--border-primary: #3a3a3c;
 	--border-secondary: #272729;
 	--bg-secondary: #1a1a1b;
