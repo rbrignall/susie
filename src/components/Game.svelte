@@ -53,8 +53,9 @@
 	let timer: Timer;
     let CVCpattern: string[];
     
-    let numVowels=word.split("").filter(e => vowels.includes(e)).length; 
-
+    function numVowels() {
+        return word.split("").filter(e => vowels.includes(e)).length; 
+    }
 
 
     function getUniqueLetters(str) {
@@ -165,20 +166,20 @@
             }
         
             // Next, check vowels and consonants
-            if (countLetters(vowels,"present") === numVowels) {
+            if (countLetters(vowels,"present") === numVowels()) {
                 changed = writeKeystate(vowels,"present","absent");
-                logExplainer(changed, "Found " + numVowels + " vowels in word: all others absent.");            
+                logExplainer(changed, "Found " + numVowels() + " vowels in word: all others absent.");            
             }
-            if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels > 0) {
+            if (countLetters(vowels,"absent") === vowels.length - 1 && numVowels() > 0) {
                 changed = writeKeystate(vowels,"absent","present");
                 logExplainer(changed, "Found " + (vowels.length - 1) + " vowels not in word, so " + changed.toUpperCase() + " is present.");
             }
         
-            if (countLetters(consonants,"present") === COLS - numVowels) {
+            if (countLetters(consonants,"present") === COLS - numVowels()) {
                 changed = writeKeystate(consonants,"present","absent");
-                logExplainer(changed, "Found " + (COLS - numVowels) + " consonants in word: all others absent.");            
+                logExplainer(changed, "Found " + (COLS - numVowels()) + " consonants in word: all others absent.");            
             }
-            if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels < COLS) {
+            if (countLetters(consonants,"absent") === consonants.length - 1 && numVowels() < COLS) {
                 changed = writeKeystate(vowels,"absent","present");
                 logExplainer(changed, "Found " + (consonants.length - 1) + " consonants not in word, so " + changed.toUpperCase() + " is present.");
             }

@@ -12,22 +12,54 @@
 
 <h3>how to play</h3>
 
-<div>Can you find Susie's word in 10 guesses?</div>
+<div class="para">Can you find Susie's word in 10 guesses?</div>
 
-<div>She has given hints about each letter: C stands for consonant and V stands for vowel.</div>
+<div class="para">She has given hints about each letter: C stands for consonant and V stands for vowel. For example:</div>
 
-<div>Each guess must be a valid five-letter word. Hit the enter button to submit.</div>
+<div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
 
-<div>After each guess, the number after the word shows how many correct letters are in the word. The colour of the tiles also changes depending on how close your guess was.</div>
+	<div class="row nil" style="height: 16px;">
+		<Tile value="c" />
+		<Tile value="c" />
+		<Tile value="v" />
+		<Tile value="c" />
+		<Tile value="c" />
+</div>
+</div>
+
+<div class="para">The answer will be a word like BLANK, CHURN or STUDY.</div>
+
+<div class="para">Each guess must be a valid five-letter word. Hit the enter button to submit.</div>
+
+<div class="para">After each guess, the colour of the word and number after shows how many correct letters are in the word. For example:</div>
+
+<div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
+    <div class="wrapper">
+       <div class="row three">
+          <Tile value="s" />
+		  <Tile value="t" />
+		  <Tile value="i" />
+		  <Tile value="l" />
+          <Tile value="l" />
+	   </div>
+    <div class="numwrapper">
+       <Tile value="3" />
+	</div>
+	</div>
+</div>
+<div class="para">Three of the letters of STILL are somewhere in Susie's word. The other two letters are not.</div>
+
+<div class="para"><b>Note:</b> The game does not tell you <i>which</i> letters are correct, and it does not tell you whether any letters are in the right position. You need to use your powers of logical and linguistic deduction!</div>
+
+<div class="para">A new word from Susie will be available each day!</div>
+
 
 <h3>Keyboard colours</h3>
 
-<div>To help you close in on the word, keys on the keyboard can be highlighted grey (not in the word) or red (in the word).</div>
-
-<div>In "Normal" mode, you make your own logical deductions and can highlight keys for yourself [<a href="https://www.youtube.com/watch?v=_N5s4zeemUM" target="_blank">Watch a short video</a>]. In "Easy" mode, the programme will highlight keys for you (press "?" to see what deductions have been made).</div>
+<div class="para">To help you record your logical deductions, keys on the keyboard can be highlighted grey (not in the word) or red (in the word).</div>
 
 {#if firstvisit}
-<div>Choose which mode you would like to play.</div>
+<div class="para">Choose which mode you would like to play.</div>
 
     <div class="switchholder">
         <div class="switchoption right" class:selected={!$easyMode}>
@@ -41,13 +73,55 @@
         </div>
     </div>
     
-<div>You can change this in future from the settings menu.</div>
+<div class="para">You can change this in future from the settings menu.</div>
 {/if}
 
+<div class="para">In "Normal" mode, you must make your own logical deductions and can highlight keys for yourself [<a href="https://www.youtube.com/watch?v=_N5s4zeemUM" target="_blank">Watch a short video</a>].</div>
+
+<div class="para">In "Easy" mode, the game use its own powers of deduction and highlight keys for you (press "?" to see what deductions have been made). For example: </div>
+
+<div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
+	<div class="row nil" style="height: 16px;">
+		<Tile value="c" />
+		<Tile value="c" />
+		<Tile value="v" />
+		<Tile value="c" />
+		<Tile value="c" />
+</div>
+<div class="wrapper">
+	<div class="row one">
+		<Tile value="s" />
+		<Tile value="p" />
+		<Tile value="e" />
+		<Tile value="l" />
+		<Tile value="l" />
+	</div>
+    <div class="numwrapper">
+		<Tile value="1" />
+	</div>
+	</div>
+    <div class="wrapper">
+    	<div class="row two">
+		<Tile value="s" />
+		<Tile value="p" />
+		<Tile value="i" />
+		<Tile value="l" />
+		<Tile value="l" />
+	</div>
+    <div class="numwrapper">
+		<Tile value="2" />
+	</div>
+	</div>
+</div>
+
+<div class="para">
+The game will automatically record that "E" is not in the word (grey) and "I" is in the word (red). It will then also deduce that "A", O” and "U" are not in the word (grey), as the only vowel (“I”) has been found.</div>
+
+<!--
 <h3>Example</h3>
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
 
-	<div class="row nil" style="height: 1em;">
+	<div class="row nil" style="height: 16px;">
 		<Tile value="c" />
 		<Tile value="c" />
 		<Tile value="v" />
@@ -97,7 +171,7 @@
 		<Tile value="i" />
 		<Tile value="c" />
 		<Tile value="k" />
-	</div>
+	   </div>
     <div class="numwrapper">
         <Tile value="4" />
 	</div>
@@ -115,12 +189,11 @@
 	</div>
 	</div>
 </div>
-
-<div>A new word from Susie will be available each day!</div>
+-->
 
 
 <style lang="scss">
-	div {
+	.para {
 		margin: 10px 0;
 	}
     .switchholder {
@@ -147,21 +220,19 @@
     }
 
 	.examples {
-        font-family: var(--tile-font);
 		:global(.row > *) {
 			height: 100%;
 		}
-		&:not(.complete) :global(.row .back) {
-			transition-delay: 0.3s;
-		}
+        margin: 0px 40px;
 	}
     .wrapper {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		height: 50px;
-        width: calc(var(--tutorial-row-width) * (var(--cols) + 1) / var(--cols));    
+		grid-template-columns: 5fr 1fr;
+		height: 40px;
+        width: var(--tutorial-row-width);    
 		grid-gap: 0px;
         font-size: 1.8em;
+        font-family: var(--tile-font);
         vertical-align: middle;
         text-align: center;
         align-items: center;
@@ -173,11 +244,12 @@
     .numwrapper {
         vertical-align: middle;
         height: 100%;
+        font-size: var(--fs-regular);
     }
     .row {
 		display: grid;
 		grid-template-columns: repeat(var(--cols), 1fr);
 		height: 100%;
-        width: var(--tutorial-row-width);
+        width: calc(var(--tutorial-row-width) * var(--cols) / (var(--cols) + 1));
 	}
 </style>

@@ -1,5 +1,5 @@
 // Increase the v number when the app is updated
-const staticCacheName = "susie-v1.0.2";
+const staticCacheName = "susie-v1.0.3";
 
 const filesToCache = [
 	"./",
@@ -15,7 +15,6 @@ const filesToCache = [
     "./android-chrome-512x512.png"
 ];
 
-
 self.addEventListener('install', event => {
   log('Attempting to install service worker and cache static assets');
   event.waitUntil(
@@ -23,8 +22,12 @@ self.addEventListener('install', event => {
     .then(cache => {
       return cache.addAll(filesToCache);
     })
+    .then(function() {
+          return self.skipWaiting();
+    })
   );
 });
+
 
 
 self.addEventListener('fetch', event => {
