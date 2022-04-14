@@ -31,7 +31,7 @@
 
 <div class="para">Each guess must be a valid five-letter word. Hit the enter button to submit.</div>
 
-<div class="para">After each guess, the colour of the word and number after shows how many correct letters are in the word. For example:</div>
+<div class="para">After each guess, the colour of the word and number after shows how many letters from your guess are in the word. For example:</div>
 
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
     <div class="wrapper">
@@ -78,7 +78,7 @@
 
 <div class="para">In "Normal" mode, you must make your own logical deductions and can highlight keys for yourself [<a href="https://www.youtube.com/watch?v=_N5s4zeemUM" target="_blank">Watch a short video</a>].</div>
 
-<div class="para">In "Easy" mode, the game use its own powers of deduction and highlight keys for you (press "?" to see what deductions have been made). For example: </div>
+<div class="para">In "Easy" mode, the game makes logical deductions and highlights keys for you (press "?" to see what deductions have been made). For example: </div>
 
 <div class:complete={visible} class="examples" style="--tutorial-row-width: {rowWidth}px; --cols: {COLS}">
 	<div class="row nil" style="height: 16px;">
