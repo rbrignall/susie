@@ -18,7 +18,7 @@
 </script>
 <h3>share</h3>
 <div class="sharecontainer">
-    <Twitter class="share-button" text="{stats} #SusieGame" {url} />
+    <Twitter class="share-button" text="{stats}" hashtags="SusieGame" {url} />
     <WhatsApp class="share-button" text="{stats} {url}" />
     <div class="copybutton"
         on:click={() => {
