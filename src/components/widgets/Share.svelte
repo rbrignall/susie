@@ -3,13 +3,14 @@
 
 	import { getContext } from "svelte";
     import { WhatsApp, Twitter } from "./sharebuttons";
+    import { easyMode } from "../../stores";
 
 	export let state: GameState;
 	const toaster = getContext<Toaster>("toaster");
     const url ="https://susie.rbrignall.org.uk";
 
 	/* TODO: reinstate some kind of stats */
-    $: stats = `Susie ${(state.wordNumber)} in ${
+    $: stats = `Susie${!$easyMode && "*"} ${(state.wordNumber)} in ${
 		(state.gameStatus === 'WIN') ? state.guesses : "X"
 	}:\n${state.evaluations.map((r) => r === 0 ? "0️⃣" : (r === 1 ? "1️⃣" : (r === 2 ? "2️⃣" : (r === 3 ? "3️⃣" : (r === 4 ? "4️⃣" : "5️⃣"))))).join("")
     }\n`;
@@ -17,7 +18,7 @@
 </script>
 <h3>share</h3>
 <div class="sharecontainer">
-    <Twitter class="share-button" text="{stats}" {url} />
+    <Twitter class="share-button" text="{stats} #SusieGame" {url} />
     <WhatsApp class="share-button" text="{stats} {url}" />
     <div class="copybutton"
         on:click={() => {

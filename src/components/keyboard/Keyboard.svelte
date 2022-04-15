@@ -132,9 +132,6 @@
 		padding: 0 4px;
         touch-action: manipulation;
 	}
-	.padrow {
-		padding: 0 30px;
-	}
 	svg {
 		fill: var(--fg-primary);
 		width: 24px;
