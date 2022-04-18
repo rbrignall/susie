@@ -269,6 +269,15 @@
         localStorage.setItem(`statistics`, JSON.stringify(stats));
 	}
 
+	function lose() {
+        game.gameStatus = "FAIL";
+        setTimeout(() => toaster.pop(word.toUpperCase()), DELAY_INCREMENT);
+        setTimeout(() => (showStats = true), delay);
+        ++stats.gamesPlayed;
+        if ("currentStreak" in stats) stats.currentStreak = 0;
+        stats.lastGameNumber = game.wordNumber;
+        localStorage.setItem(`statistics`, JSON.stringify(stats));
+	}
 
 	function reload() {
         $wordNumber = getWordNumber() % words.words.length
@@ -298,10 +307,13 @@
 	<Header
 		bind:showRefresh
 		showStats={stats.gamesPlayed > 0}
-		on:stats={() => (showStats = true)}
+        guesses={game.guesses}
+        gameStatus={game.gameStatus}
+        on:stats={() => (showStats = true)}
 		on:tutorial={() => (showTutorial = true)}
 		on:settings={() => (showSettings = true)}
 		on:reload={reload}
+        on:giveup={lose}
 	/>
 	<Board
 		bind:this={board}

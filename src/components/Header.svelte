@@ -8,6 +8,8 @@
 	export let showStats: boolean;
 //	export let tutorial: boolean;
 	export let showRefresh: boolean;
+    export let guesses: number;
+    export let gameStatus: string;
 
 //	export let toaster = getContext<Toaster>("toaster");
 
@@ -35,6 +37,8 @@
 					d="M4.609 12c0-4.082 3.309-7.391 7.391-7.391a7.39 7.39 0 0 1 6.523 3.912l-1.653 1.567H22v-5.13l-1.572 1.659C18.652 3.841 15.542 2 12 2 6.477 2 2 6.477 2 12s4.477 10 10 10c4.589 0 8.453-3.09 9.631-7.301l-2.512-.703c-.871 3.113-3.73 5.395-7.119 5.395-4.082 0-7.391-3.309-7.391-7.391z"
 				/>
 			</GameIcon>
+        {:else if guesses > 9 && gameStatus === "IN_PROGRESS"}
+        <div class="giveup" on:click={e => dispatch("giveup")}>Give up?</div>
 		{/if}
 	</div>
 	<h1>
@@ -106,5 +110,17 @@
     }
     .h1-five {
         color: var(--color-five);
+    }
+    .giveup {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: var(--fs-small);
+        line-height: var(--fs-small);
+        letter-spacing: 0px;
+        vertical-align: middle;
+        text-align: center;
+        width: 48px;
+        cursor: hand;
     }
 </style>
