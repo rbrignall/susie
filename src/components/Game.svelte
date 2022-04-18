@@ -171,25 +171,29 @@
                     let oldEval = game.evaluations[j]; 
                     
                     //e.g. ANGER, ANGLE. (Diff L/R). If score(ANGER) >= score(ANGLE): L IN the word => R is IN. R not in => L not in.
+                    //e.g. FROCK, KNOCK (Diff FR/CL). If score(FROCK) >= score(KNOCK): FR not in =/=> KN not in.
+                    // (N is not in, but K might be in once (but not twice))
+                    // e.g. ROPER, LOPER (Diff R/L). If Score(LOPER) >= score(ROPER): R IN the word =/=> L is in.
+                    // ROVER, LOPER: Score(LOPER) >= score(ROVER): 
                     let [comChars, uniqueToGuess, uniqueToOld] = stringPairs(guessWord,oldWord);
                     
                     if (oldEval >= guessEval){ 
-                        if(uniqueToGuess.split('').every((e) => ($keyStates[e] === "present"))) {
+                        if(uniqueToGuess.length === uniqueToGuess.split("").filter(e => !comChars.includes(e)).length && uniqueToGuess.split('').every((e) => ($keyStates[e] === "present"))) {
                             changed = writeKeystate(uniqueToOld,"absent","present");
                             logExplainer(changed, "Compared " + oldWord.toUpperCase() + " (" + oldEval + ") with " + guessWord.toUpperCase() + " (" + guessEval + ") given " + uniqueToGuess.toUpperCase().split('').join(', ') + " " + (uniqueToGuess.length > 1 ? "are" : "is") + " in the word.");
                         }
                         if(uniqueToOld.split('').every((e) => ($keyStates[e] === "absent"))) {
-                            changed = writeKeystate(uniqueToGuess,"present","absent");
+                            changed = writeKeystate(uniqueToGuess.split("").filter(e => !comChars.includes(e)).join(""),"present","absent");
                             logExplainer(changed, "Compared " + oldWord.toUpperCase() + " (" + oldEval + ") with " + guessWord.toUpperCase() + " (" + guessEval + ") given " + uniqueToOld.toUpperCase().split('').join(', ') + " " + (uniqueToOld.length > 1 ? "are" : "is") + " not in the word.");                        
                         }
                     }
                     if (guessEval >= oldEval){ 
-                        if(uniqueToOld.split('').every((e) => ($keyStates[e] === "present"))) {
+                        if(uniqueToOld.length === uniqueToOld.split("").filter(e => !comChars.includes(e)).length && uniqueToOld.split('').every((e) => ($keyStates[e] === "present"))) {
                             changed = writeKeystate(uniqueToGuess,"absent","present");
                             logExplainer(changed, "Compared " + oldWord.toUpperCase() + " (" + oldEval + ") with " + guessWord.toUpperCase() + " (" + guessEval + ") given " + uniqueToOld.toUpperCase().split('').join(', ') + " " + (uniqueToOld.length > 1 ? "are" : "is") + " in the word.");
                         }
                         if(uniqueToGuess.split('').every((e) => ($keyStates[e] === "absent"))) {
-                            changed = writeKeystate(uniqueToOld,"present","absent");
+                            changed = writeKeystate(uniqueToOld.split("").filter(e => !comChars.includes(e)).join(""),"present","absent");
                             logExplainer(changed, "Compared " + oldWord.toUpperCase() + " (" + oldEval + ") with " + guessWord.toUpperCase() + " (" + guessEval + ") given " + uniqueToGuess.toUpperCase().split('').join(', ') + " " + (uniqueToGuess.length > 1 ? "are" : "is") + " not in the word.");                        
                         }
                     }
