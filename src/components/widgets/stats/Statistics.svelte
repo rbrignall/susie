@@ -15,7 +15,7 @@
 							return a + parseInt(b[0]) * b[1];
 						}
 						return a;
-					}, 0) / data.gamesPlayed || 0
+					}, 0) / data.guesses.reduce((a,b) => a+b,0) || 0
 				).toFixed(1),
 			],
 		];
