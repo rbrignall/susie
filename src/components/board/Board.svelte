@@ -6,6 +6,7 @@
 
 	export let value: string[];
     export let evaluations: WordState[];
+    export let showhint: boolean;
 	export let guesses: number;
     export let CVCpattern: string[];
 	export function shake(row: number) {
@@ -41,9 +42,11 @@
 <svelte:window bind:innerHeight={innerHeight} bind:innerWidth={innerWidth}/>
 
 <div style="height: calc({innerHeight}px - var(--header-height) - var(--keyboard-height));">
+    {#if (showhint)}
     <CVCRow
             width={getRowDim(innerWidth,innerHeight) + 40} bind:CVCpattern
     />
+    {/if}
     <div class="board" 
         id="boardid" 
         style="width: {getRowDim(innerWidth,innerHeight)+40}px; max-height: calc({innerHeight}px - 2.2em - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"

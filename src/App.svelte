@@ -7,7 +7,7 @@
 		words,
 	} from "./utils";
 	import Game from "./components/Game.svelte";
-	import { keyStates, easyMode, 
+	import { keyStates, easyMode, noHintMode,
             darkTheme, wordNumber
     } from "./stores";
 	import { Toaster } from "./components/widgets";
@@ -20,14 +20,15 @@
 
 
     // Settings separated out:
-    darkTheme.set(JSON.parse(localStorage.getItem("darkTheme")) as boolean || false);
-    
+    darkTheme.set(JSON.parse(localStorage.getItem("darkTheme")) as boolean || false);    
     easyMode.set(JSON.parse(localStorage.getItem("easyMode") ?? true) as boolean);
+    noHintMode.set(JSON.parse(localStorage.getItem("noHintMode")) as boolean || false);    
     // N.B. wordNumber stores the index of the word!
     wordNumber.set(getWordNumber() % words.words.length);
     
     darkTheme.subscribe(s => localStorage.setItem("darkTheme",s));
     easyMode.subscribe(s => localStorage.setItem("easyMode",s));
+    noHintMode.subscribe(s => localStorage.setItem("noHintMode",s));
 
 	wordNumber.subscribe(() => {        
         // Grab statistics. CreateDefaultStats looks for URL data
@@ -38,6 +39,7 @@
         temp = JSON.parse(localStorage.getItem("gameState"));
         if (!temp || temp.wordNumber < getWordNumber()) {
             state = createNewGame();
+            if($noHintMode) state.showHint = false;
         } else {
             // TODO: Add checks for missing items in temp (e.g. evaluation being null)
             if(!(temp.explainer))
@@ -53,6 +55,7 @@
 //		}
 		keyStates.set(state.keyStates);
         keyStates.subscribe(s => state.keyStates = s);
+        noHintMode.subscribe(s => {if(!s) state.showHint = true});
 	});
 
 	$: saveState(state);

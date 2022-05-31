@@ -24,6 +24,7 @@ type GameState = {
 	guesses: number,
 	wordNumber: number,
 	validNormal: boolean,
+    showHint: boolean,
     boardState: string[],
     evaluations: WordState[],
     keyStates: { [key: string]: KeyState },

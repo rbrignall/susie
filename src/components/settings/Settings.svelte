@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { darkTheme, easyMode } from "../../stores";
+	import { darkTheme, easyMode, noHintMode } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
@@ -43,6 +43,18 @@
 				<span slot="desc">Turns off automatic keyboard highlighting.</span>
 			</Setting>
 		</div>
+        <div 
+			on:click={() => {
+				if ($noHintMode) {
+					toaster.pop("Hint will be hidden in the next game.");
+				}
+			}}
+		>
+		    <Setting bind:value={$noHintMode}>
+                <span slot="title">No Hint Mode</span>
+                <span slot="desc">Hides consonant/vowel hints.</span>
+		    </Setting>
+		</div>
 		<Setting bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
 		</Setting>
@@ -73,7 +85,7 @@
     <div class="footer">
         <div>Concept by <a href="http://benponniah.com/" target="_blank">Ben Ponniah</a>. Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
         <div class="word">
-            Game #{wordNumber} v1.2.0
+            Game #{wordNumber} v1.3.0
         </div>
     </div>
 </div>

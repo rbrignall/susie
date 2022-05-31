@@ -366,7 +366,7 @@ const words = {
 "fling",
 "nerve"
     ],
-	"valid": [  
+	"valid": [
 		"cigar",
 		"rebut",
 		"sissy",
