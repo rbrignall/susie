@@ -1,5 +1,5 @@
 // Increase the v number when the app is updated
-const staticCacheName = "susie-v1.2.0";
+const staticCacheName = "susie-v1.3.0";
 
 const filesToCache = [
 	"./",
