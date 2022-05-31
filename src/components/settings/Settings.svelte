@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { darkTheme, easyMode } from "../../stores";
+	import { darkTheme, easyMode, noHintMode } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
@@ -42,6 +42,18 @@
 				<span slot="title">Easy Mode</span>
 				<span slot="desc">Turns off automatic keyboard highlighting.</span>
 			</Setting>
+		</div>
+        <div 
+			on:click={() => {
+				if ($noHintMode) {
+					toaster.pop("Hint will be hidden in the next game.");
+				}
+			}}
+		>
+		    <Setting bind:value={$noHintMode}>
+                <span slot="title">No Hint Mode</span>
+                <span slot="desc">Hides consonant/vowel hints.</span>
+		    </Setting>
 		</div>
 		<Setting bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>

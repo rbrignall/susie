@@ -77,6 +77,7 @@ export function createNewGame(): GameState {
 		guesses: 0,
 		wordNumber: getWordNumber(),
 		validNormal: true,
+        showHint: true,
         boardState: [""],//Array(ROWS).fill(""),
         evaluations: [-1],//Array.from({ length: ROWS }, () => (-1)),
         keyStates: createKeyStates(),
