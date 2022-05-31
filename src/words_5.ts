@@ -367,6 +367,7 @@ const words = {
 "nerve"
     ],
 	"valid": [  
+        "mhase",
 		"cigar",
 		"rebut",
 		"sissy",

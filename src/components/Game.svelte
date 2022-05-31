@@ -237,8 +237,12 @@
 
             ++game.guesses;
 			if (game.boardState[game.guesses - 1] === word) win();
+            else if ((state === 5) && (setCVC(game.boardState[game.guesses - 1]).join("") === setCVC(word).join("")))
+                win(0);
             else {
-                if (state === 5) setTimeout(() => toaster.pop("Nearly there: try an anagram!"), DELAY_INCREMENT);
+                if (state === 5) {
+                    setTimeout(() => toaster.pop("Nearly there: try an anagram!"), DELAY_INCREMENT);
+                }
                 // Add new row
                 game.evaluations.push(-1);
                 game.boardState.push("");
@@ -250,11 +254,15 @@
 		}
 	}
 
-	function win() {
+	function win(precise = 1) {
 		board.bounce(game.guesses - 1);
         game.gameStatus = "WIN";
-		setTimeout(() => toaster.pop(PRAISE[Math.min(game.guesses, PRAISE.length) - 1]), DELAY_INCREMENT);
-		setTimeout(() => (showStats = true), delay * 1.4);
+        if(precise)
+            setTimeout(() => toaster.pop(PRAISE[Math.min(game.guesses, PRAISE.length) - 1]), DELAY_INCREMENT);
+        else
+            setTimeout(() => toaster.pop("Susie's word was " + word.toUpperCase() + ", but it fits the pattern, so you win!"), DELAY_INCREMENT);
+
+        setTimeout(() => (showStats = true), delay * 1.4);
         if (stats.guesses[game.guesses])
             ++stats.guesses[game.guesses];
         else
