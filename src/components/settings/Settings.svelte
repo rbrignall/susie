@@ -40,7 +40,7 @@
 		>
 			<Setting bind:value={$easyMode} disabled={!validNormal}>
 				<span slot="title">Easy Mode</span>
-				<span slot="desc">Turns off automatic keyboard highlighting.</span>
+				<span slot="desc">Enables automatic keyboard highlighting.</span>
 			</Setting>
 		</div>
         <div 
