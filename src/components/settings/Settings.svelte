@@ -40,7 +40,7 @@
 		>
 			<Setting bind:value={$easyMode} disabled={!validNormal}>
 				<span slot="title">Easy Mode</span>
-				<span slot="desc">Turns off automatic keyboard highlighting.</span>
+				<span slot="desc">Enables automatic keyboard highlighting.</span>
 			</Setting>
 		</div>
         <div 
@@ -85,7 +85,7 @@
     <div class="footer">
         <div>Concept by <a href="http://benponniah.com/" target="_blank">Ben Ponniah</a>. Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
         <div class="word">
-            Game #{wordNumber} v1.3.0
+            Game #{wordNumber} v1.3.1
         </div>
     </div>
 </div>

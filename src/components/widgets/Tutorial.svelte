@@ -27,7 +27,7 @@
 </div>
 </div>
 
-<div class="para">The answer will be a word like BLANK, CHURN or STUDY.</div>
+<div class="para">The answer will be a word like BLANK, CHURN or STUDY. (Note: 'Y' is always a regarded as a consonant in this game.)</div>
 
 <div class="para">Each guess must be a valid five-letter word. Hit the enter button to submit.</div>
 
