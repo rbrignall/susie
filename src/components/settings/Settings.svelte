@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { darkTheme, easyMode, noHintMode } from "../../stores";
+	import { darkTheme, easyMode, noHintMode, practiceMode } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
@@ -55,6 +55,10 @@
                 <span slot="desc">Hides consonant/vowel hints.</span>
 		    </Setting>
 		</div>
+		<Setting bind:value={$practiceMode}>
+			<span slot="title">Practice Mode</span>
+            <span slot="desc">Play unlimited games!</span>
+		</Setting>
 		<Setting bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
 		</Setting>

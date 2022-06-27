@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher, getContext } from "svelte";
 	import { scale, fade } from "svelte/transition";
-	import { wordNumber } from "../stores";
+	import { wordNumber, practiceMode } from "../stores";
 	import GameIcon from "./GameIcon.svelte";
 	import type { Toaster } from "./widgets";
 
@@ -16,6 +16,7 @@
 	const dispatch = createEventDispatcher();
 
     // This might be broken: showRefresh is always going to be false
+    // Also: practice mode will get confused by this
     wordNumber.subscribe((m) => {
 		if (86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0)) > 0) {
 			showRefresh = false;
@@ -30,11 +31,11 @@
 				d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2zm1 16h-2v-2h2v2zm0-4.141V15h-2v-2a1 1 0 0 1 1-1c1.103 0 2-.897 2-2s-.897-2-2-2s-2 .897-2 2H8a4 4 0 0 1 8 0a3.991 3.991 0 0 1-3 3.859z"
 			/>
 		</GameIcon>
-		{#if showRefresh}
+		{#if $practiceMode || showRefresh}
 			<GameIcon onClick={() => dispatch("reload")}>
 				<path
 					transition:fade={{ duration: 200 }}
-					d="M4.609 12c0-4.082 3.309-7.391 7.391-7.391a7.39 7.39 0 0 1 6.523 3.912l-1.653 1.567H22v-5.13l-1.572 1.659C18.652 3.841 15.542 2 12 2 6.477 2 2 6.477 2 12s4.477 10 10 10c4.589 0 8.453-3.09 9.631-7.301l-2.512-.703c-.871 3.113-3.73 5.395-7.119 5.395-4.082 0-7.391-3.309-7.391-7.391z"
+				    d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10zm4.82-4.924a7 7 0 1 0-1.852 1.266l-.975-1.755A5 5 0 1 1 17 12h-3l2.82 5.076z"
 				/>
 			</GameIcon>
         {:else if guesses > 9 && gameStatus === "IN_PROGRESS"}

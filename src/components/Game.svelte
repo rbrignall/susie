@@ -31,7 +31,7 @@
         vowels,
         consonants
 	} from "../utils";
-	import { keyStates, wordNumber, easyMode, noHintMode } from "../stores";
+	import { keyStates, wordNumber, easyMode, noHintMode, practiceMode } from "../stores";
 
 	export let word: string;
 	export let stats: Stats;
@@ -260,36 +260,44 @@
         else
             setTimeout(() => toaster.pop("Susie's word was " + word.toUpperCase() + ", but it fits the pattern, so you win!"), DELAY_INCREMENT);
 
-        setTimeout(() => (showStats = true), delay * 1.4);
-        if (stats.guesses[game.guesses])
-            ++stats.guesses[game.guesses];
-        else
-            stats.guesses[game.guesses] = 1;
-        ++stats.gamesPlayed;
-        if ("currentStreak" in stats) {
-            stats.currentStreak =
-				    game.wordNumber - stats.lastGame > 1
-				        ? 1
-				        : stats.currentStreak + 1;
+        if ($practiceMode) {
+            // Do something
+        } else {
+            setTimeout(() => (showStats = true), delay * 1.4);
+            if (stats.guesses[game.guesses])
+                ++stats.guesses[game.guesses];
+            else
+                stats.guesses[game.guesses] = 1;
+            ++stats.gamesPlayed;
+            if ("currentStreak" in stats) {
+                stats.currentStreak =
+				        game.wordNumber - stats.lastGame > 1
+				            ? 1
+				            : stats.currentStreak + 1;
 				if (stats.currentStreak > stats.maxStreak) stats.maxStreak = stats.currentStreak;
+            }
+            stats.lastGame = game.wordNumber;
+            localStorage.setItem(`statistics`, JSON.stringify(stats));
         }
-        stats.lastGame = game.wordNumber;
-        localStorage.setItem(`statistics`, JSON.stringify(stats));
 	}
 
 	function lose() {
         game.gameStatus = "FAIL";
         setTimeout(() => toaster.pop(word.toUpperCase()), DELAY_INCREMENT);
-        setTimeout(() => (showStats = true), delay);
-        ++stats.gamesPlayed;
-        if ("currentStreak" in stats) stats.currentStreak = 0;
-        stats.lastGameNumber = game.wordNumber;
-        localStorage.setItem(`statistics`, JSON.stringify(stats));
+        if ($practiceMode) {
+            // Do something
+        } else {
+            setTimeout(() => (showStats = true), delay);
+            ++stats.gamesPlayed;
+            if ("currentStreak" in stats) stats.currentStreak = 0;
+            stats.lastGameNumber = game.wordNumber;
+            localStorage.setItem(`statistics`, JSON.stringify(stats));
+        }
 	}
 
 	function reload() {
-        $wordNumber = getWordNumber() % words.words.length
-		game = createNewGame();
+        $wordNumber = getWordNumber($practiceMode) % words.words.length
+		game = createNewGame($practiceMode);
         if($noHintMode) state.showHint = false;
         word = words.words[$wordNumber]
         $keyStates = createKeyStates();

@@ -33,7 +33,7 @@
 	class:complete={guesses > num}
     style="width: {width}px; height: {width/(COLS+2)}px;"
 >
-        <Tile value="" />
+        <Tile value="{num+1}" />
     <div class="inner-row {getRowClass(evaluation)}"
         style="width: {width*COLS/(COLS+2)}px;"
     >

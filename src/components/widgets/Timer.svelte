@@ -19,10 +19,10 @@
 		clearInterval(countDown);
             
 		ms = 86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0));
-		if (getWordNumber() > $wordNumber) dispatch("timeup");
+		if (getWordNumber(false) > $wordNumber) dispatch("timeup");
 		countDown = setInterval(() => {
 			ms = 86400000 - (new Date().valueOf() - new Date().setHours(0,0,0,0));
-			if (getWordNumber() > $wordNumber) { //(ms < 0) {
+			if (getWordNumber(false) > $wordNumber) { //(ms < 0) {
 				clearInterval(countDown);
 				dispatch("timeup");
 			}
