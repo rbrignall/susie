@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 	import { COLS } from "../../utils";
-
+    import {numberGuesses } from "../../stores";
 	import Tile from "./Tile.svelte";
 	export let guesses: number;
 	export let num: number;
@@ -33,7 +33,9 @@
 	class:complete={guesses > num}
     style="width: {width}px; height: {width/(COLS+2)}px;"
 >
-        <Tile value="{num+1}" />
+    <div class="number-cell">
+        <Tile value="{($numberGuesses && evaluation >= 0) ? num+1 : ''}" />
+    </div>
     <div class="inner-row {getRowClass(evaluation)}"
         style="width: {width*COLS/(COLS+2)}px;"
     >
@@ -70,6 +72,7 @@
     .number-cell {
         font-size: var(--fs-tile-small);
         height: 100%;    
+        transition: background-color 2s ease;
     }
     
 	@keyframes shake {

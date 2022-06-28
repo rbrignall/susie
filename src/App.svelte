@@ -8,8 +8,8 @@
 		words,
 	} from "./utils";
 	import Game from "./components/Game.svelte";
-	import { keyStates, easyMode, noHintMode, practiceMode,
-            darkTheme, wordNumber
+	import { keyStates, easyMode, noHintMode, practiceMode, 
+            darkTheme, numberGuesses, wordNumber
     } from "./stores";
 	import { Toaster } from "./components/widgets";
 	import { onMount, setContext } from "svelte";
@@ -22,8 +22,9 @@
 
     // Settings separated out:
     darkTheme.set(JSON.parse(localStorage.getItem("darkTheme")) as boolean || false);    
+    numberGuesses.set(JSON.parse(localStorage.getItem("numberGuesses")) as boolean || false);    
     easyMode.set(JSON.parse(localStorage.getItem("easyMode") ?? true) as boolean);
-    noHintMode.set(JSON.parse(localStorage.getItem("noHintMode")) as boolean || false);    
+    noHintMode.set(JSON.parse(localStorage.getItem("noHintMode")) as boolean || false);
     practiceMode.set(JSON.parse(localStorage.getItem("practiceMode")) as boolean || false);
     // N.B. wordNumber stores the index of the word (mod array length)!
     if ($practiceMode) 
@@ -33,6 +34,7 @@
 
 
     darkTheme.subscribe(s => localStorage.setItem("darkTheme",s));
+    numberGuesses.subscribe(s => localStorage.setItem("numberGuesses",s));
     easyMode.subscribe(s => localStorage.setItem("easyMode",s));
     noHintMode.subscribe(s => localStorage.setItem("noHintMode",s));
     practiceMode.subscribe(s => {

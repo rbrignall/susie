@@ -307,6 +307,7 @@
 		//timer.reset($mode);
 	}
 
+
 	onMount(() => {
 		if (!(game.gameStatus === "IN_PROGRESS")) setTimeout(() => (showStats = true), delay);
         if (stats.gamesPlayed === 0) {
@@ -315,7 +316,11 @@
 	});
 	// $: toaster.pop(word);
     
-    CVCpattern = setCVC(word);
+    //CVCpattern = setCVC(word);
+    wordNumber.subscribe(() => { 
+        CVCpattern = setCVC(words.words[$wordNumber])
+    })
+
 </script>
 
 <svelte:body on:click={board.hideCtx} on:contextmenu={board.hideCtx} />
@@ -331,6 +336,7 @@
 		on:settings={() => (showSettings = true)}
 		on:reload={reload}
         on:giveup={lose}
+        on:toggleMode={practiceMode.set(!$practiceMode)}
 	/>
 	<Board
 		bind:this={board}

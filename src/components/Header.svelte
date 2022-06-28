@@ -31,7 +31,7 @@
 				d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2zm1 16h-2v-2h2v2zm0-4.141V15h-2v-2a1 1 0 0 1 1-1c1.103 0 2-.897 2-2s-.897-2-2-2s-2 .897-2 2H8a4 4 0 0 1 8 0a3.991 3.991 0 0 1-3 3.859z"
 			/>
 		</GameIcon>
-		{#if $practiceMode || showRefresh}
+		{#if ($practiceMode && (guesses < 10 || gameStatus != "IN_PROGRESS")) || (!$practiceMode && showRefresh)}
 			<GameIcon onClick={() => dispatch("reload")}>
 				<path
 					transition:fade={{ duration: 200 }}
@@ -42,13 +42,16 @@
         <div class="giveup" on:click={e => dispatch("giveup")}>Give up?</div>
 		{/if}
 	</div>
-	<h1>
+	<h1 on:click={e => dispatch("toggleMode")}>
         <span class="h1-one">S</span>
         <span class="h1-two">u</span>
         <span class="h1-three">s</span>
         <span class="h1-four">i</span>
         <span class="h1-five">e</span>
     </h1>
+    {#if $practiceMode}
+    <h2>PRACTICE MODE</h2>
+    {/if}
 	<div class="icons">
 		{#if showStats}
 			<GameIcon onClick={() => dispatch("stats")}>
@@ -112,6 +115,15 @@
     .h1-five {
         color: var(--color-five);
     }
+	h2 {
+		position: absolute;
+		width: 100%;
+        top: 43px;
+		font-size: var(--fs-small);
+        font-family: var(--tile-font);
+        font-weight: 700;
+		text-align: center;
+	}
     .giveup {
         display: flex;
         justify-content: center;
