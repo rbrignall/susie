@@ -309,7 +309,7 @@
 
 
 	onMount(() => {
-		if (!(game.gameStatus === "IN_PROGRESS")) setTimeout(() => (showStats = true), delay);
+		if (!(game.gameStatus === "IN_PROGRESS") && !$practiceMode) setTimeout(() => (showStats = true), delay);
         if (stats.gamesPlayed === 0) {
             setTimeout(() => (showTutorial = true), delay);
         }
