@@ -47,14 +47,24 @@ export function newSeed() {
     return new Date(today.getFullYear(), today.getMonth(), today.getDate()).valueOf();
 }
 
-export function getWordNumber() {
+export function getWordNumber(practiceMode: boolean) {
     const numbleOneDate = new Date(2022,3,11,0,0,0,0).setHours(0,0,0,0)
-    const now = new Date().setHours(0,0,0,0)
-    const msInDay = 86400000
-    return Math.floor((now - numbleOneDate) / msInDay) //% WORDS.length
+    const now = practiceMode ? new Date().setMilliseconds(0) : new Date().setHours(0,0,0,0)
+    const msInUnit = practiceMode ? 1000 : 86400000
+    return Math.floor((now - numbleOneDate) / msInUnit) //% WORDS.length
 }
 
-
+export function getStoredWordNumber(practiceMode: boolean) {
+    let temp: GameState;
+    if(practiceMode)
+        temp = JSON.parse(localStorage.getItem("practiceState"));
+    else
+        temp = JSON.parse(localStorage.getItem("gameState"));
+    if(!temp)
+        return getWordNumber(practiceMode);
+    else
+        return temp.wordNumber;
+}
 
 export const DELAY_INCREMENT = 150;
 
@@ -71,11 +81,11 @@ export const PRAISE = [
         "Phew!"
 ];
 
-export function createNewGame(): GameState {
+export function createNewGame(practiceMode: boolean): GameState {
 	return {
         gameStatus: "IN_PROGRESS",
 		guesses: 0,
-		wordNumber: getWordNumber(),
+		wordNumber: getWordNumber(practiceMode),
 		validNormal: true,
         showHint: true,
         boardState: [""],//Array(ROWS).fill(""),
