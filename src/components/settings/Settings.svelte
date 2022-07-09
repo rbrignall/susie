@@ -56,8 +56,8 @@
 		    </Setting>
 		</div>
 		<Setting bind:value={$practiceMode}>
-			<span slot="title">Practice Mode</span>
-            <span slot="desc">Play unlimited games!</span>
+			<span slot="title">Unlimited Mode</span>
+            <span slot="desc">Play random games for fun</span>
 		</Setting>
 		<Setting bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
