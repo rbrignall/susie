@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 
-	import { darkTheme, easyMode, noHintMode } from "../../stores";
+	import { darkTheme, easyMode, noHintMode, practiceMode, numberGuesses } from "../../stores";
 	import { Toaster } from "../widgets";
 	import Setting from "./Setting.svelte";
 
@@ -55,8 +55,16 @@
                 <span slot="desc">Hides consonant/vowel hints.</span>
 		    </Setting>
 		</div>
+		<Setting bind:value={$practiceMode}>
+			<span slot="title">Unlimited Mode</span>
+            <span slot="desc">Play random games for fun</span>
+		</Setting>
 		<Setting bind:value={$darkTheme}>
 			<span slot="title">Dark Theme</span>
+		</Setting>
+		<Setting bind:value={$numberGuesses}>
+			<span slot="title">Number guesses</span>
+            <span slot="desc">Display how many guesses you've had</span>
 		</Setting>
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
@@ -85,7 +93,7 @@
     <div class="footer">
         <div>Concept by <a href="http://benponniah.com/" target="_blank">Ben Ponniah</a>. Developed by <a href="https://github.com/rbrignall" target="_blank">rbrignall</a></div>
         <div class="word">
-            Game #{wordNumber} v1.3.1
+            Game #{wordNumber} v2.0.0
         </div>
     </div>
 </div>
