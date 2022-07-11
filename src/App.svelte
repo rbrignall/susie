@@ -27,10 +27,6 @@
     noHintMode.set(JSON.parse(localStorage.getItem("noHintMode")) as boolean || false);
     practiceMode.set(JSON.parse(localStorage.getItem("practiceMode")) as boolean || false);
     // N.B. wordNumber stores the index of the word (mod array length)!
-    if ($practiceMode) 
-        wordNumber.set(getStoredWordNumber($practiceMode) % words.words.length);
-    else
-        wordNumber.set(getWordNumber($practiceMode) % words.words.length);
 
 
     darkTheme.subscribe(s => localStorage.setItem("darkTheme",s));
@@ -39,7 +35,10 @@
     noHintMode.subscribe(s => localStorage.setItem("noHintMode",s));
     practiceMode.subscribe(s => {
         localStorage.setItem("practiceMode",s)
-        wordNumber.set(getStoredWordNumber($practiceMode) % words.words.length);
+        if ($practiceMode) 
+            wordNumber.set(getStoredWordNumber($practiceMode) % words.words.length);
+        else
+            wordNumber.set(getWordNumber($practiceMode) % words.words.length);
     });
 
 	wordNumber.subscribe(() => {        
