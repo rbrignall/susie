@@ -309,6 +309,7 @@
 
 
 	onMount(() => {
+        (window.adsbygoogle = window.adsbygoogle || []).push({}); // Google ads
 		if (!(game.gameStatus === "IN_PROGRESS") && !$practiceMode) setTimeout(() => (showStats = true), delay);
         if (stats.gamesPlayed === 0) {
             setTimeout(() => (showTutorial = true), delay);
@@ -326,6 +327,13 @@
 <svelte:body on:click={board.hideCtx} on:contextmenu={board.hideCtx} />
 
 <main class:guesses={game.guesses !== 0} style="--rows: {game.guesses}; --cols: {COLS}">
+     <div class="adwrapper">
+        <!-- Susie header -->
+        <ins class="adsbygoogle"
+     style="display:inline-block;width:100%;height:var(--ad-height);"
+     data-ad-client="ca-pub-2276519097140776"
+     data-ad-slot="9521260978"></ins>
+    </div>
 	<Header
 		bind:showRefresh
 		showStats={stats.gamesPlayed > 0}
