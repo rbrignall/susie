@@ -310,6 +310,8 @@
 
 	onMount(() => {
         (window.adsbygoogle = window.adsbygoogle || []).push({}); // Google ads
+        (window.adsbygoogle = window.adsbygoogle || []).push({}); // Google ads
+        (window.adsbygoogle = window.adsbygoogle || []).push({}); // Google ads
 		if (!(game.gameStatus === "IN_PROGRESS") && !$practiceMode) setTimeout(() => (showStats = true), delay);
         if (stats.gamesPlayed === 0) {
             setTimeout(() => (showTutorial = true), delay);
@@ -326,13 +328,26 @@
 
 <svelte:body on:click={board.hideCtx} on:contextmenu={board.hideCtx} />
 
+    <div class="leftadwrapper">
+        <ins class="adsbygoogle sidead"
+            style="display:block"
+            data-ad-client="ca-pub-3184778483057051"
+            data-ad-slot="4305667393"></ins>
+    </div>
+    <div class="rightadwrapper">
+        <ins class="adsbygoogle sidead"
+            style="display:block"
+            data-ad-client="ca-pub-3184778483057051"
+            data-ad-slot="5629491382"></ins>
+    </div>
+
 <main class:guesses={game.guesses !== 0} style="--rows: {game.guesses}; --cols: {COLS}">
-     <div class="adwrapper">
-        <!-- Susie header -->
-        <ins class="adsbygoogle"
-     style="display:inline-block;width:100%;height:var(--ad-height);"
-     data-ad-client="ca-pub-2276519097140776"
-     data-ad-slot="9521260978"></ins>
+    <!-- Susie header -->
+    <div class="headeradwrapper">
+        <ins class="adsbygoogle headerad"
+            style="display:block"
+            data-ad-client="ca-pub-3184778483057051"
+            data-ad-slot="6412955981"></ins>
     </div>
 	<Header
 		bind:showRefresh
