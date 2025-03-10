@@ -49,7 +49,7 @@
     {/if}
     <div class="board" 
         id="boardid" 
-        style="width: {getRowDim(innerWidth,innerHeight)+40}px; max-height: calc({innerHeight}px - 2.2em - var(--header-height) - var(--keyboard-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
+        style="width: {getRowDim(innerWidth,innerHeight)+40}px; max-height: calc({innerHeight}px - 2.2em - var(--header-height) - var(--keyboard-height) - var(--ad-height)); height: {(guesses+1)*getBoxDim(innerWidth,innerHeight)}px; --repeat: {guesses+1}"
         bind:this={scrollBoxObj}
     >
     {#each value as _, i}
